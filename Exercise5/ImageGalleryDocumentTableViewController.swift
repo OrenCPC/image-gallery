@@ -9,10 +9,26 @@ import UIKit
 
 class ImageGalleryDocumentTableViewController: UITableViewController {
     
+    ////
+    ///TODO :
+    ///1. According to the letcture 11 presentation(Search for <Table View Segues>:
+    /// Wire up this MVC to a ImageViewController MVC with a navigation controller(pick an image gallery according to the imageGalleryDocument that was chosen)---- Via code or storyboard?
+    ///
     
-    //Start of Model
+    
+    ////
+    ///// Start of Model
+    ///
+    
     var imageGalleryDocuments = ["One", "Two", "Three"]
-    //End Of Model
+    
+    
+    
+    
+    
+    ///
+    /////End Of Model
+    ///
 
     // MARK: - Table view data source
 

@@ -1,47 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Mdn-PL-z4G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qBK-V4-Lbm">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Collection View Controller-->
-        <scene sceneID="3tq-KU-F53">
+        <!--Image Gallery Collection View Controller-->
+        <scene sceneID="F6S-Jl-Z98">
             <objects>
-                <collectionViewController id="zRk-dU-Xji" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="6bY-6V-xcP">
+                <collectionViewController id="qBK-V4-Lbm" customClass="ImageGalleryCollectionViewController" customModule="Exercise5" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Ctk-br-DZh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Fze-eF-uXJ">
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8a6-xY-3WX">
                             <size key="itemSize" width="80" height="80"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bSJ-x2-MGJ">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="GsJ-LU-LMQ" customClass="ImageCollectionViewCell" customModule="Exercise5" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fiE-Fp-tWL">
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xQs-5q-3JR">
                                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ysn-So-yGE">
+                                            <rect key="frame" x="28.5" y="26.5" width="23" height="26"/>
+                                            <imageReference key="image" image="square.and.arrow.up.fill" catalog="system" symbolScale="large"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ysn-So-yGE" firstAttribute="centerY" secondItem="xQs-5q-3JR" secondAttribute="centerY" id="grZ-94-ecg"/>
+                                        <constraint firstItem="ysn-So-yGE" firstAttribute="centerX" secondItem="xQs-5q-3JR" secondAttribute="centerX" id="liJ-sc-Vzr"/>
+                                    </constraints>
                                 </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="image" destination="ysn-So-yGE" id="bey-Ai-3yT"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
-                            <outlet property="dataSource" destination="zRk-dU-Xji" id="HCd-Ia-pfc"/>
-                            <outlet property="delegate" destination="zRk-dU-Xji" id="e1y-Co-2zw"/>
+                            <outlet property="dataSource" destination="qBK-V4-Lbm" id="agL-kD-g2w"/>
+                            <outlet property="delegate" destination="qBK-V4-Lbm" id="Cvb-cM-Fxn"/>
                         </connections>
                     </collectionView>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Arj-uR-ga9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5jj-pi-HKo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="84" y="1064"/>
+            <point key="canvasLocation" x="381" y="1850"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="eVQ-0Q-wXE">
@@ -50,28 +64,26 @@
                     <view key="view" contentMode="scaleToFill" id="LTu-Wx-2xV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xeF-qU-0hx">
+                                <rect key="frame" x="-19" y="-22" width="444" height="916"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="tPI-0P-zIM"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Wcb-P9-NFz"/>
+                            </scrollView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="PPr-vK-VMe"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xeF-qU-0hx" firstAttribute="top" secondItem="LTu-Wx-2xV" secondAttribute="top" id="33B-3p-3Tr"/>
+                            <constraint firstAttribute="bottom" secondItem="xeF-qU-0hx" secondAttribute="bottom" id="HPc-Qy-wr4"/>
+                            <constraint firstAttribute="trailing" secondItem="xeF-qU-0hx" secondAttribute="trailing" id="dgw-C1-j3e"/>
+                            <constraint firstItem="xeF-qU-0hx" firstAttribute="leading" secondItem="LTu-Wx-2xV" secondAttribute="leading" id="yhX-LP-yiX"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wxd-mN-KsN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1135" y="1177"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Exercise5" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1728" y="45"/>
+            <point key="canvasLocation" x="-1136.231884057971" y="1176.5625"/>
         </scene>
         <!--Image Gallery Document Table View Controller-->
         <scene sceneID="3kn-t4-xgo">
@@ -139,6 +151,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="square.and.arrow.up.fill" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
