@@ -14,8 +14,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     
-    //    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
     var imageURL: URL? {
         didSet {
             image = nil
@@ -25,15 +23,41 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var ratio: CGFloat?
+    
     private var image: UIImage? {
         get {
             return imageView.image
         }
         set {
             imageView.image = newValue
-            imageView.sizeToFit()
+//            imageView.sizeToFit()
 //            scrollView?.contentSize = imageView.frame.size
-            spinner?.stopAnimating()
+//            func longRunningProcess()
+//            {
+//                while (self.running == true) {
+//                     // app logic goes here
+//                }
+//            }
+            
+                if let size = image?.size {
+                    ratio = size.width / size.height
+                }
+                spinner?.stopAnimating()
+                self.addSubview(imageView)
+            
+
+           
+
+//            if let newValue = newValue {
+//                let ratio = newValue.size.width / newValue.size.height
+//
+//                let newHeight = imageView.frame.width / ratio
+//                constraintHeight.constant = newHeight
+//
+//                print(image?.size.height)
+//                self.layoutIfNeeded()
+//            }
         }
     }
     
@@ -44,23 +68,35 @@ class ImageCollectionViewCell: UICollectionViewCell {
 //        }
 //    }
     
+//    private func fetchImage() {
+//        if let url = imageURL {
+//            spinner.startAnimating()
+//            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+//                let urlContents = try? Data(contentsOf: url)
+//                DispatchQueue.main.async {
+//                    if let imageData = urlContents, url == self?.imageURL {
+//                        self?.image = UIImage(data: imageData)
+//                    }
+//                }
+//
+////                {
+////                    if let imageData = urlContents, url == self?.imageURL {
+////                        self?.image = UIImage(data: imageData)
+////                    }
+////                }
+//            }
+//
+//        }
+//
+//    }
     private func fetchImage() {
         if let url = imageURL {
             spinner.startAnimating()
-//            spinner.startAnimating()
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let urlContents = try? Data(contentsOf: url)
-                DispatchQueue.main.async {
-                    if let imageData = urlContents, url == self?.imageURL {
-                        self?.image = UIImage(data: imageData)
-//                        self.sizeToFit()
-//                        self?.addSubview(imageView)
+                    if let imageData = urlContents, url == self.imageURL {
+                        self.image = UIImage(data: imageData)
                     }
                 }
-            }
-            
-        }
-        
     }
     
     

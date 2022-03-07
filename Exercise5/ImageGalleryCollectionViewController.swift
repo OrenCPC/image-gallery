@@ -9,7 +9,8 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ImageGalleryCollectionViewController: UICollectionViewController {
+class ImageGalleryCollectionViewController: UICollectionViewController
+, UICollectionViewDelegateFlowLayout{
     
 //    //Start of Model
 //    var NASA: Dictionary<String,URL> = {
@@ -42,10 +43,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController {
     ///
     ///
     
-    var allImagesWidth = 250
-    
-    
-    
+    private var allImagesWidth = 100.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,14 +87,15 @@ class ImageGalleryCollectionViewController: UICollectionViewController {
     
     
     
-    var cassiniURLs = [ "https://ichef.bbci.co.uk/news/976/cpsprodpb/17419/production/_97775259_saturn.jpg",
+    var cassiniURLs = [ "https://ichef.bbci.co.uk/news/976/cpsprodpb/17419/production/_97775259_saturn.jpg"
+                        
+                        ,
          "https://cdn.vox-cdn.com/thumbor/S_2OnmKwFbURIsaY5R0gGR1B6Pk=/0x0:3000x2000/620x413/filters:focal(1300x741:1780x1221):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56671157/cassini.0.jpg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLGheJOf1gtzua1PYb_Qnq5OWkaoaiMhdP3Q&usqp=CAU",
             "https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2004/06/saturn_orbit_insertion_manoeuvre2/17885286-2-eng-GB/Saturn_orbit_insertion_manoeuvre.jpg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJqmNdNdMDERRQZALWMNmZpFFXpJ5fRbjKAA&usqp=CAU"
     ]
     
-
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
@@ -109,10 +108,69 @@ class ImageGalleryCollectionViewController: UICollectionViewController {
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
             imageCell.imageURL = URL(string: cassiniURLs[indexPath.item])?.imageURL
-            imageCell.addSubview(imageCell.imageView)
+//            imageCell.addSubview(imageCell.imageView)
         }
         return cell
     }
+    
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var newHeight = 200.0
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCollectionViewCell {
+
+            
+            if let ratio = cell.ratio {
+                newHeight = allImagesWidth / ratio
+            }
+        }
+        
+//        return CGSize(width: 300, height: 300)
+
+    return CGSize(width: allImagesWidth, height: newHeight)
+
+    }
+
+        
+        
+        
+        
+        
+        
+        
+//        let ratio =  imageCell.imageView.image?.size.width / imageCell.imageView.image?.size.height
+//                let newHeight = imageCell.image?.size.width / ratio
+//        let newHeight = 0
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath)
+//        if let imageCell = cell as? ImageCollectionViewCell {
+//           let width =  imageCell.imageView.image?.size.width
+//            let height = imageCell.imageView.image?.size.height
+//            let ratio = width / height
+//            newHeight =  width/ratio
+//        }
+
+
+       
+    
+
+
+
+
+        
+        
+        
+        
+//        if let imageCell = cell as? ImageCollectionViewCell {
+//            let ratio = .size.width / newValue.size.height
+//
+//            let newHeight = imageView.frame.width / ratio
+//            constraintHeight.constant = newHeight
+//            let size = CGSize(width: 20, height: 30)
+//
+//
+//        }
+        
 
     // MARK: UICollectionViewDelegate
 
@@ -146,6 +204,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController {
     */
 
 }
+
+
 
 //extension UIImage {
 //    func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
