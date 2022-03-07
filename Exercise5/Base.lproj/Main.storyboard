@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -32,18 +31,23 @@
                                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ysn-So-yGE">
-                                            <rect key="frame" x="28.5" y="26.5" width="23" height="26"/>
-                                            <imageReference key="image" image="square.and.arrow.up.fill" catalog="system" symbolScale="large"/>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="SRg-mU-wyU">
+                                            <rect key="frame" x="21.5" y="21.5" width="37" height="37"/>
+                                            <color key="color" red="0.08557506650686264" green="0.34564527869224548" blue="0.94989711046218872" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </activityIndicatorView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9nM-eU-MkP">
+                                            <rect key="frame" x="-80" y="-24" width="240" height="128"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ysn-So-yGE" firstAttribute="centerY" secondItem="xQs-5q-3JR" secondAttribute="centerY" id="grZ-94-ecg"/>
-                                        <constraint firstItem="ysn-So-yGE" firstAttribute="centerX" secondItem="xQs-5q-3JR" secondAttribute="centerX" id="liJ-sc-Vzr"/>
+                                        <constraint firstItem="SRg-mU-wyU" firstAttribute="centerX" secondItem="xQs-5q-3JR" secondAttribute="centerX" id="7NR-dI-rH7"/>
+                                        <constraint firstItem="SRg-mU-wyU" firstAttribute="centerY" secondItem="xQs-5q-3JR" secondAttribute="centerY" id="svt-dh-s33"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <outlet property="image" destination="ysn-So-yGE" id="bey-Ai-3yT"/>
+                                    <outlet property="imageView" destination="9nM-eU-MkP" id="qnI-du-Vbd"/>
+                                    <outlet property="spinner" destination="SRg-mU-wyU" id="v2N-PY-4jW"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -151,7 +155,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="square.and.arrow.up.fill" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

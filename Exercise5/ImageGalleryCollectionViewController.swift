@@ -84,6 +84,11 @@ class ImageGalleryCollectionViewController: UICollectionViewController {
 
     //let url = URL(string: "https://www.avanderlee.com")!
 
+    
+    
+    
+    
+    
     var cassiniURLs = [ "https://ichef.bbci.co.uk/news/976/cpsprodpb/17419/production/_97775259_saturn.jpg",
          "https://cdn.vox-cdn.com/thumbor/S_2OnmKwFbURIsaY5R0gGR1B6Pk=/0x0:3000x2000/620x413/filters:focal(1300x741:1780x1221):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56671157/cassini.0.jpg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLGheJOf1gtzua1PYb_Qnq5OWkaoaiMhdP3Q&usqp=CAU",
@@ -103,25 +108,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath)
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
-            if let url = URL(string: cassiniURLs[indexPath.item])?.imageURL {
-                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                    let urlContents = try? Data(contentsOf: url)
-                    DispatchQueue.main.async {
-                        if let imageData = urlContents {
-                            let imageView = UIImageView()
-                            imageView.image = UIImage(data: imageData)
-                            let imgHeight = imageView.image?.size.height
-                            let imgWidth = imageView.image?.size.width
-                            
-                            imageView.sizeToFit()
-                            imageCell.addSubview(imageView)
-                        }
-                    }
-                }
-            }
-            
+            imageCell.imageURL = URL(string: cassiniURLs[indexPath.item])?.imageURL
+            imageCell.addSubview(imageCell.imageView)
         }
-        
         return cell
     }
 
@@ -157,3 +146,33 @@ class ImageGalleryCollectionViewController: UICollectionViewController {
     */
 
 }
+
+//extension UIImage {
+//    func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
+//        // Determine the scale factor that preserves aspect ratio
+//        let widthRatio = targetSize.width / size.width
+//        let heightRatio = targetSize.height / size.height
+//
+//        let scaleFactor = min(widthRatio, heightRatio)
+//
+//        // Compute the new image size that preserves aspect ratio
+//        let scaledImageSize = CGSize(
+//            width: size.width * scaleFactor,
+//            height: size.height * scaleFactor
+//        )
+//
+//        // Draw and return the resized UIImage
+//        let renderer = UIGraphicsImageRenderer(
+//            size: scaledImageSize
+//        )
+//
+//        let scaledImage = renderer.image { _ in
+//            self.draw(in: CGRect(
+//                origin: .zero,
+//                size: scaledImageSize
+//            ))
+//        }
+//
+//        return scaledImage
+//    }
+//}
