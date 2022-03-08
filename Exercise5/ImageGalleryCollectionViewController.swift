@@ -118,6 +118,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
         var newHeight = 200.0
+        print("Im in cellSize")
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCollectionViewCell {
 
             
@@ -152,24 +153,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 
 
        
-    
-
-
-
-
-        
-        
-        
-        
-//        if let imageCell = cell as? ImageCollectionViewCell {
-//            let ratio = .size.width / newValue.size.height
-//
-//            let newHeight = imageView.frame.width / ratio
-//            constraintHeight.constant = newHeight
-//            let size = CGSize(width: 20, height: 30)
-//
-//
-//        }
         
 
     // MARK: UICollectionViewDelegate
@@ -205,34 +188,3 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 
 }
 
-
-
-//extension UIImage {
-//    func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
-//        // Determine the scale factor that preserves aspect ratio
-//        let widthRatio = targetSize.width / size.width
-//        let heightRatio = targetSize.height / size.height
-//
-//        let scaleFactor = min(widthRatio, heightRatio)
-//
-//        // Compute the new image size that preserves aspect ratio
-//        let scaledImageSize = CGSize(
-//            width: size.width * scaleFactor,
-//            height: size.height * scaleFactor
-//        )
-//
-//        // Draw and return the resized UIImage
-//        let renderer = UIGraphicsImageRenderer(
-//            size: scaledImageSize
-//        )
-//
-//        let scaledImage = renderer.image { _ in
-//            self.draw(in: CGRect(
-//                origin: .zero,
-//                size: scaledImageSize
-//            ))
-//        }
-//
-//        return scaledImage
-//    }
-//}

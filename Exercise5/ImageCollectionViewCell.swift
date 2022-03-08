@@ -31,33 +31,11 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
         set {
             imageView.image = newValue
-//            imageView.sizeToFit()
-//            scrollView?.contentSize = imageView.frame.size
-//            func longRunningProcess()
-//            {
-//                while (self.running == true) {
-//                     // app logic goes here
-//                }
-//            }
-            
                 if let size = image?.size {
                     ratio = size.width / size.height
                 }
                 spinner?.stopAnimating()
                 self.addSubview(imageView)
-            
-
-           
-
-//            if let newValue = newValue {
-//                let ratio = newValue.size.width / newValue.size.height
-//
-//                let newHeight = imageView.frame.width / ratio
-//                constraintHeight.constant = newHeight
-//
-//                print(image?.size.height)
-//                self.layoutIfNeeded()
-//            }
         }
     }
     
@@ -90,13 +68,14 @@ class ImageCollectionViewCell: UICollectionViewCell {
 //
 //    }
     private func fetchImage() {
+        print("Im in fetch")
         if let url = imageURL {
             spinner.startAnimating()
-                let urlContents = try? Data(contentsOf: url)
-                    if let imageData = urlContents, url == self.imageURL {
-                        self.image = UIImage(data: imageData)
-                    }
-                }
+            let urlContents = try? Data(contentsOf: url)
+            if let imageData = urlContents, url == self.imageURL {
+                self.image = UIImage(data: imageData)
+            }
+        }
     }
     
     
