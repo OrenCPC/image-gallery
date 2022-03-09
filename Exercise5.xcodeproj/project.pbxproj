@@ -18,6 +18,7 @@
 		681524AA27CF8FF9004F5F1A /* ImageGalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681524A927CF8FF9004F5F1A /* ImageGalleryCollectionViewController.swift */; };
 		681524AE27D4B7EB004F5F1A /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681524AD27D4B7EB004F5F1A /* ImageCollectionViewCell.swift */; };
 		68A48FE327D65BF3009AA2AA /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A48FE227D65BF3009AA2AA /* Photo.swift */; };
+		68A48FE527D73335009AA2AA /* imageGalleryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A48FE427D73335009AA2AA /* imageGalleryModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		681524A927CF8FF9004F5F1A /* ImageGalleryCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryCollectionViewController.swift; sourceTree = "<group>"; };
 		681524AD27D4B7EB004F5F1A /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		68A48FE227D65BF3009AA2AA /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		68A48FE427D73335009AA2AA /* imageGalleryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageGalleryModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				6815249027CF6356004F5F1A /* SceneDelegate.swift */,
 				6815249427CF6356004F5F1A /* Main.storyboard */,
 				681524A927CF8FF9004F5F1A /* ImageGalleryCollectionViewController.swift */,
+				68A48FE427D73335009AA2AA /* imageGalleryModel.swift */,
 				68A48FE227D65BF3009AA2AA /* Photo.swift */,
 				681524AD27D4B7EB004F5F1A /* ImageCollectionViewCell.swift */,
 				681524A727CF6FA9004F5F1A /* ImageGalleryDocumentTableViewController.swift */,
@@ -165,6 +168,7 @@
 				6815248F27CF6356004F5F1A /* AppDelegate.swift in Sources */,
 				681524A627CF68E4004F5F1A /* ImageViewController.swift in Sources */,
 				681524A827CF6FA9004F5F1A /* ImageGalleryDocumentTableViewController.swift in Sources */,
+				68A48FE527D73335009AA2AA /* imageGalleryModel.swift in Sources */,
 				681524AE27D4B7EB004F5F1A /* ImageCollectionViewCell.swift in Sources */,
 				681524AA27CF8FF9004F5F1A /* ImageGalleryCollectionViewController.swift in Sources */,
 				681524A427CF65BF004F5F1A /* Utilities.swift in Sources */,

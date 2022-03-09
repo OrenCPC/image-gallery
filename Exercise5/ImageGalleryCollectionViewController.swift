@@ -12,42 +12,63 @@ private let reuseIdentifier = "Cell"
 class ImageGalleryCollectionViewController: UICollectionViewController
 , UICollectionViewDelegateFlowLayout{
     
-//    //Start of Model
-//    var NASA: Dictionary<String,URL> = {
-//       let NASAURLStrings = [
-//           "Cassini" : "https://www.w3schools.com/images/w3schools_green.jpg",
-//           "Earth" : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3AEarth_Western_Hemisphere.jpg&psig=AOvVaw2FrZFSEfEHPvSJsen8dB9i&ust=1646140999673000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOjV6Z6_ovYCFQAAAAAdAAAAABAD",
-//           "Saturn" : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ALatest_Saturn_Portrait_(48725935576).jpg&psig=AOvVaw0uPnD0FEusmhTNeIGxOEMq&ust=1646141017109000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMCHpKi_ovYCFQAAAAAdAAAAABAD"
-//       ]
-//       var urls = Dictionary<String,URL>()
-//       for (key,value) in NASAURLStrings {
-//           urls[key] = URL(string: value)
-//       }
-//       return urls
-//   }()
-    //// End Of Model
-    ///////
     
     
-    
-//    var imageURL: URL? {
+//    lazy private var model = imageGalleryModel(urls: cassiniURLs.compactMap{ URL(string: $0) }) {
 //        didSet {
-//            image = nil
-//            if view.window != nil { //Am I on screen?
-//                fetchImage()
-//            }
+//            print("set model")
+//            collectionView.reloadData()
 //        }
 //    }
     
-    ///////
-    ///
-    ///
+//    func startFetch() {
+//       model = imageGalleryModel(urls: cassiniURLs.compactMap{ URL(string: $0) })
+//
+//    }
     
-    private var allImagesWidth = 100.0
+    private func updateCollectionView () {
+        downloadedImages += 1
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    private func fetchImage(imageUrl: URL?) {
+        if let url = imageUrl {
+                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                    let urlContents = try? Data(contentsOf: url)
+                        if let imageData = urlContents {
+                            if let image = UIImage(data: imageData) {
+                                let imageWidth = image.size.width
+                                let imageHeight = image.size.height
+                                    self?.images += [image]
+                                    self?.imagesWidth += [imageWidth]
+                                    self?.imagesHeight += [imageHeight]
+                                self?.updateCollectionView()
+                            }
+                        }
+                    
+                }
+            }
+    }
+        
+    
+    private func startFetch() {
+        ///
+        ///fetch all images in a multithreaded manner and when finished create collectionView
+        ///
+        
+            imagesURL = cassiniURLs.compactMap{ URL(string: $0) }
+            for index in 0..<imagesURL.count {
+            fetchImage(imageUrl: imagesURL[index]!)
+        }
+    }
+    
 
+                                               
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -55,8 +76,10 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        startFetch()
+//        model = imageGalleryModel(urls: cassiniURLs.compactMap{ URL(string: $0) })
+        
     }
-    
     
     
 
@@ -83,6 +106,11 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     //let url = URL(string: "https://www.avanderlee.com")!
 
     
+    private var images: [UIImage?] = []
+    private var imagesWidth: [CGFloat?] = []
+    private var imagesHeight: [CGFloat?] = []
+    private var imagesURL: [URL?] = []
+    private var downloadedImages = 0
     
     
     
@@ -90,25 +118,62 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     var cassiniURLs = [ "https://ichef.bbci.co.uk/news/976/cpsprodpb/17419/production/_97775259_saturn.jpg"
                         
                         ,
-         "https://cdn.vox-cdn.com/thumbor/S_2OnmKwFbURIsaY5R0gGR1B6Pk=/0x0:3000x2000/620x413/filters:focal(1300x741:1780x1221):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56671157/cassini.0.jpg",
+
+         "https://cdn.vox-cdn.com/thumbor/S_2OnmKwFbURIsaY5R0gGR1B6Pk=/0x0:3000x2000/620x413/filters:focal(1300x741:1780x1221):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56671157/cassini.0.jpg"
+                        ,
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLGheJOf1gtzua1PYb_Qnq5OWkaoaiMhdP3Q&usqp=CAU",
             "https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2004/06/saturn_orbit_insertion_manoeuvre2/17885286-2-eng-GB/Saturn_orbit_insertion_manoeuvre.jpg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJqmNdNdMDERRQZALWMNmZpFFXpJ5fRbjKAA&usqp=CAU"
     ]
     
     
+//    func imageURL(at indexPath: IndexPath) -> URL? {
+//        return model.photos[indexPath.item].imageURL ?? nil
+//    }
+//
+    func ratio(at indexPath: IndexPath) -> CGFloat? {
+        return width(at: indexPath)! / height(at: indexPath)!
+    }
+
+    func image(at indexPath: IndexPath) -> UIImage? {
+        return images[indexPath.item] ?? nil
+    }
+    
+    func height(at indexPath: IndexPath) -> CGFloat? {
+        return imagesHeight[indexPath.item] ?? nil
+    }
+    
+    func width(at indexPath: IndexPath) -> CGFloat? {
+        return imagesWidth[indexPath.item] ?? nil
+    }
+//
+//    func didImageDownload(at indexPath: IndexPath) -> Bool {
+//        return model.photos[indexPath.item].didDownloadImage
+//    }
+    
+    
+    private var allImagesWidth = 80.0
+    
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-//        return NASA["Cassini"].count
-        return cassiniURLs.count
+//        print("model.photos.count \(model.photos.count)")
+//        return model.photos.count
+        
+        return downloadedImages
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("cellForItemAt")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath)
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.imageURL = URL(string: cassiniURLs[indexPath.item])?.imageURL
-//            imageCell.addSubview(imageCell.imageView)
+            print("Trying to create a cell")
+            imageCell.image = image(at: indexPath)
+            
+//            imageCell.imageURL = imageURL(at: indexPath)
+//            imageCell.ratio = ratio(at: indexPath)
+//            imageCell.image = image(at: indexPath)
         }
         return cell
     }
@@ -117,15 +182,12 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var newHeight = 200.0
-        print("Im in cellSize")
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCollectionViewCell {
-
-            
-            if let ratio = cell.ratio {
-                newHeight = allImagesWidth / ratio
+        var newHeight = height(at: indexPath)!
+//        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCollectionViewCell {
+            if let ratio = ratio(at: indexPath) {
+                newHeight = width(at: indexPath)! / ratio
             }
-        }
+//        }
         
 //        return CGSize(width: 300, height: 300)
 
@@ -133,13 +195,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 
     }
 
-        
-        
-        
-        
-        
-        
-        
+    
+    
 //        let ratio =  imageCell.imageView.image?.size.width / imageCell.imageView.image?.size.height
 //                let newHeight = imageCell.image?.size.width / ratio
 //        let newHeight = 0

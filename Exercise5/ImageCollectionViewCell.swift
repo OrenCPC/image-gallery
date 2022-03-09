@@ -13,31 +13,32 @@ class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
+    var image: UIImage? {
+       get {
+           return imageView.image
+       }
+       set {
+           imageView.image = newValue
+               spinner?.stopAnimating()
+               self.addSubview(imageView)
+       }
+   }
+}
     
-    var imageURL: URL? {
-        didSet {
-            image = nil
-//            if view.window != nil { //Am I on screen?
-                fetchImage()
-//            }
-        }
-    }
+//    var imageURL : URL?
     
-    var ratio: CGFloat?
+//    var imageURL: URL? {
+//        didSet {
+//            image = nil
+////            if view.window != nil { //Am I on screen?
+//                fetchImage()
+////            }
+//        }
+//    }
     
-    private var image: UIImage? {
-        get {
-            return imageView.image
-        }
-        set {
-            imageView.image = newValue
-                if let size = image?.size {
-                    ratio = size.width / size.height
-                }
-                spinner?.stopAnimating()
-                self.addSubview(imageView)
-        }
-    }
+//    var ratio: CGFloat?
+    
+    
     
 //    override func viewDidAppear(_ animated: Bool) {
 //        super.viewDidAppear(animated)
@@ -67,16 +68,15 @@ class ImageCollectionViewCell: UICollectionViewCell {
 //        }
 //
 //    }
-    private func fetchImage() {
-        print("Im in fetch")
-        if let url = imageURL {
-            spinner.startAnimating()
-            let urlContents = try? Data(contentsOf: url)
-            if let imageData = urlContents, url == self.imageURL {
-                self.image = UIImage(data: imageData)
-            }
-        }
-    }
+//    private func fetchImage() {
+//        print("Im in fetch")
+//        if let url = imageURL {
+//            spinner.startAnimating()
+//            let urlContents = try? Data(contentsOf: url)
+//            if let imageData = urlContents, url == self.imageURL {
+//                self.image = UIImage(data: imageData)
+//            }
+//        }
     
     
     
@@ -84,4 +84,4 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     
     
-}
+
