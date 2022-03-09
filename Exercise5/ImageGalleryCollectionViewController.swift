@@ -13,19 +13,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 , UICollectionViewDelegateFlowLayout{
     
     
-    
-//    lazy private var model = imageGalleryModel(urls: cassiniURLs.compactMap{ URL(string: $0) }) {
-//        didSet {
-//            print("set model")
-//            collectionView.reloadData()
-//        }
-//    }
-    
-//    func startFetch() {
-//       model = imageGalleryModel(urls: cassiniURLs.compactMap{ URL(string: $0) })
-//
-//    }
-    
     private func updateCollectionView () {
         downloadedImages += 1
         DispatchQueue.main.async {
@@ -39,6 +26,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController
                     let urlContents = try? Data(contentsOf: url)
                         if let imageData = urlContents {
                             if let image = UIImage(data: imageData) {
+                                print("finished fetching an image")
+
                                 let imageWidth = image.size.width
                                 let imageHeight = image.size.height
                                     self?.images += [image]
@@ -47,7 +36,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
                                 self?.updateCollectionView()
                             }
                         }
-                    
                 }
             }
     }
@@ -58,10 +46,28 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         ///fetch all images in a multithreaded manner and when finished create collectionView
         ///
         
-            imagesURL = cassiniURLs.compactMap{ URL(string: $0) }
+        
+        let queue = OperationQueue()
+        
+//        imagesURL = cassiniURLs.compactMap{ URL(string: $0) }
+        
             for index in 0..<imagesURL.count {
-            fetchImage(imageUrl: imagesURL[index]!)
+                
+            queue.addOperation {
+
+                self.fetchImage(imageUrl: self.imagesURL[index]!)
+                
+            }
         }
+        queue.waitUntilAllOperationsAreFinished()
+        
+        
+        
+//        downloadedImages = images.count
+//        DispatchQueue.main.async {
+//            self.collectionView.reloadData()
+//        }
+
     }
     
 
@@ -76,6 +82,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        imagesURL = cassiniURLs.compactMap{ URL(string: $0) }
         startFetch()
 //        model = imageGalleryModel(urls: cassiniURLs.compactMap{ URL(string: $0) })
         
@@ -113,7 +120,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     private var downloadedImages = 0
     
     
-    
+//    var imagesURL :[]= cassiniURLs.compactMap{ URL(string: $0) }
+
     
     var cassiniURLs = [ "https://ichef.bbci.co.uk/news/976/cpsprodpb/17419/production/_97775259_saturn.jpg"
                         
@@ -146,34 +154,35 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     func width(at indexPath: IndexPath) -> CGFloat? {
         return imagesWidth[indexPath.item] ?? nil
     }
-//
-//    func didImageDownload(at indexPath: IndexPath) -> Bool {
-//        return model.photos[indexPath.item].didDownloadImage
-//    }
+    func calculatedSize(at indexPath: IndexPath)-> CGSize? {
+        var newHeight = height(at: indexPath)!
+            if let ratio = ratio(at: indexPath) {
+                newHeight = width(at: indexPath)! / ratio
+            }
+        return CGSize(width: allImagesWidth, height: newHeight)
+    }
+
     
     
-    private var allImagesWidth = 80.0
+    private var allImagesWidth = 300.0
+    
+    var flowLayout: UICollectionViewFlowLayout? {
+    return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+    }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-//        print("model.photos.count \(model.photos.count)")
-//        return model.photos.count
-        
+        print("updating collectionView size")
         return downloadedImages
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellForItemAt")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath)
         // Configure the cell
         if let imageCell = cell as? ImageCollectionViewCell {
             print("Trying to create a cell")
-            imageCell.image = image(at: indexPath)
-            
-//            imageCell.imageURL = imageURL(at: indexPath)
-//            imageCell.ratio = ratio(at: indexPath)
-//            imageCell.image = image(at: indexPath)
+            imageCell.image = image(at: indexPath)?.resizeImageTo(size: calculatedSize(at: indexPath)!)
         }
         return cell
     }
@@ -182,17 +191,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var newHeight = height(at: indexPath)!
-//        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCollectionViewCell {
-            if let ratio = ratio(at: indexPath) {
-                newHeight = width(at: indexPath)! / ratio
-            }
-//        }
         
-//        return CGSize(width: 300, height: 300)
-
-    return CGSize(width: allImagesWidth, height: newHeight)
-
+        return calculatedSize(at: indexPath)!
+        
     }
 
     
@@ -244,4 +245,14 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     */
 
 }
-
+extension UIImage {
+    
+    func resizeImageTo(size: CGSize) -> UIImage? {
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        self.draw(in: CGRect(origin: CGPoint.zero, size: size))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return resizedImage
+    }
+}

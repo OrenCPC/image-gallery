@@ -19,11 +19,15 @@ class ImageCollectionViewCell: UICollectionViewCell {
        }
        set {
            imageView.image = newValue
+           
                spinner?.stopAnimating()
                self.addSubview(imageView)
        }
    }
 }
+
+
+    
     
 //    var imageURL : URL?
     
