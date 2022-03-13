@@ -60,52 +60,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         updateCollectionView()
     }
     
-//    private func startFetch() {
-//
-//        let kMaxConcurrent = 3 // Or 1 if you want strictly ordered downloads!
-//        let semaphore = DispatchSemaphore(value: kMaxConcurrent)
-//        let downloadQueue = DispatchQueue(label: "com.app.downloadQueue", attributes: .concurrent)
-//
-//
-////        imagesURL = cassiniURLs.compactMap{ URL(string: $0) }
-//
-//
-//        for index in 0..<imagesURL.count {
-//            downloadQueue.async { [unowned self] in
-//                semaphore.wait()
-//                self.fetchImage(imageUrl: self.imagesURL[index]!)
-//                semaphore.signal()
-//            }
-//        }
-////        waitUntilAllOperationsAreFinished()
-//
-//    }
-    
-    ///
-    ///
-    ///
-    ///
-    ///
-//    let queue = OperationQueue()
-//    queue.maxConcurrentOperationCount = 3
-//
-//    let op1 = BlockOperation(block: {
-//      print("implementing op1")
-//    })
-//    queue.addOperation(op1)
-//    queue.waitUntilAllOperationsAreFinished()
 
-    
-    
-    ////
-    ///
-    ///
-    ///
-    ///
-    
-    
-    
-                                               
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -123,7 +78,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     }
     
     
-
     /*
     // MARK: - Navigation
 
@@ -135,7 +89,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     */
 
     // MARK: UICollectionViewDataSource
-
     
     var cassiniURLs = [ "https://ichef.bbci.co.uk/news/976/cpsprodpb/17419/production/_97775259_saturn.jpg",
          "https://cdn.vox-cdn.com/thumbor/S_2OnmKwFbURIsaY5R0gGR1B6Pk=/0x0:3000x2000/620x413/filters:focal(1300x741:1780x1221):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56671157/cassini.0.jpg"
@@ -145,16 +98,17 @@ class ImageGalleryCollectionViewController: UICollectionViewController
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJqmNdNdMDERRQZALWMNmZpFFXpJ5fRbjKAA&usqp=CAU"
     ]
     
-//    func ratio(at indexPath: IndexPath) -> CGFloat {
-//        return images[indexPath.item].ratio
-//    }
+    
+    func ratio(at indexPath: IndexPath) -> CGFloat {
+        return images[indexPath.item].ratio
+    }
 
-//    func image(at indexPath: IndexPath) -> UIImage {
-//        return images[indexPath.item].image
-//    }
+    func image(at indexPath: IndexPath) -> UIImage {
+        return images[indexPath.item].image
+    }
 
     func calculatedSize(at indexPath: IndexPath)-> CGSize {
-        let height = self.width / images[indexPath.item].ratio
+        let height = self.width / ratio(at: indexPath)
         
         return CGSize(width: self.width, height: height)
     }
@@ -178,7 +132,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
         if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.image = images[indexPath.item].image.resizeImageTo(size: calculatedSize(at: indexPath))
+            imageCell.image = image(at: indexPath).resizeImageTo(size: calculatedSize(at: indexPath))
         }
     }
     
