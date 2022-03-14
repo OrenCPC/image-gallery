@@ -9,28 +9,13 @@ import UIKit
 
 class ImageGalleryDocumentTableViewController: UITableViewController {
     
-    ////
-    ///TODO :
-    ///1. According to the letcture 11 presentation(Search for <Table View Segues>:
-    /// Wire up this MVC to a ImageViewController MVC with a navigation controller(pick an image gallery according to the imageGalleryDocument that was chosen)---- Via code or storyboard?
-    ///
+//    @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
+//        imageGalleryDocuments += ["Untitled".madeUnique(withRespectTo: imageGalleryDocuments)]
+//        tableView.reloadData()
+//    }
     
-    
-    ////
-    ///// Start of Model
-    ///
-    
-    var imageGalleryDocuments = ["Space"]
-    
-    
-    ///
-    /////End Of Model
-    ///
-    
-    @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
-        imageGalleryDocuments += ["Untitled".madeUnique(withRespectTo: imageGalleryDocuments)]
-        tableView.reloadData()
-    }
+    private lazy var tableModel = GalleryNamesTableModel()
+
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -40,11 +25,7 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                 if let cell = sender as? UITableViewCell,
                    let indexPath = tableView.indexPath(for: cell),
                    let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
-                    seguedToMVC.galleryName = imageGalleryDocuments[indexPath.row]
-                    //How to set the galleryName?
-                    
-                    
-//                    data[indexPath.section][indexPath.row]
+                    seguedToMVC.galleryName = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
                 }
             default: break
             }
@@ -53,22 +34,46 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
+    
+    
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return tableModel.title(at: section)
+//    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
+//        view.backgroundColor = UIColor.red
+             
+        let lbl = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 15, height: 40))
+        lbl.text = tableModel.data[section].sectionName
+        view.addSubview(lbl)
+           return view
+         }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return tableModel.data.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return imageGalleryDocuments.count
+        
+        return tableModel.data[section].sectionGalleries?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DocumentCell", for: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = imageGalleryDocuments[indexPath.row]
+        cell.textLabel?.text = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
 
         return cell
+    }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+           return 40
+    }
+         
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+           return 40
     }
     
 
@@ -86,8 +91,21 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            imageGalleryDocuments.remove(at: indexPath.row)
+            
+            var deletedRow = tableModel.data[indexPath.section].sectionGalleries?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+
+            switch tableModel.data[indexPath.section].sectionName {
+                case "imageGalleryDocuments":
+                tableModel.data[indexPath.section + 1].sectionGalleries! += [deletedRow!]
+                //Add to recently deleted
+
+                default:
+                //Do nothing
+                break
+            }
+            tableView.reloadData()
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
