@@ -4,9 +4,10 @@
 //
 //  Created by Oren Dinur on 13/03/2022.
 //
+import UIKit
 
 import Foundation
-struct ImageGallery {
+class ImageGallery {
     
     var cassiniURLs = [ "https://ichef.bbci.co.uk/news/976/cpsprodpb/17419/production/_97775259_saturn.jpg",
          "https://cdn.vox-cdn.com/thumbor/S_2OnmKwFbURIsaY5R0gGR1B6Pk=/0x0:3000x2000/620x413/filters:focal(1300x741:1780x1221):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56671157/cassini.0.jpg"
@@ -16,12 +17,52 @@ struct ImageGallery {
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJqmNdNdMDERRQZALWMNmZpFFXpJ5fRbjKAA&usqp=CAU"
     ]
     
-    private var images: [Photo] = []
+    var images : [Photo] = []
+    var imagesURL = [URL?]()
 
 
     
-    init(imagesURL : URL) {
+    private func fetchImage(imageUrl: URL?) {
+        if let url = imageUrl {
+//            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                let urlContents = try? Data(contentsOf: url)
+                if let imageData = urlContents {
+                    if let image = UIImage(data: imageData) {
+                        let imageWidth = image.size.width
+                        let imageHeight = image.size.height
+                        self.images += [Photo(image: image, ratio: imageWidth/imageHeight)]
+                    }
+//                }
+            }
+        }
+    }
 
-        
+    private func fetchImages(onComplete: () -> Void) {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 3
+
+        for index in 0..<imagesURL.count {
+
+            let op1 = BlockOperation(block: {
+                self.fetchImage(imageUrl: self.imagesURL[index]!)
+            })
+
+            queue.addOperation(op1)
+        }
+        queue.waitUntilAllOperationsAreFinished()
+        onComplete()
+    }
+    
+
+    
+    
+    
+    func getImages(onComplete: ([Photo]) -> Void) {
+        self.imagesURL = cassiniURLs.compactMap{ URL(string: $0) }
+        self.images = []
+
+        fetchImages {
+            onComplete(images)
+        }
     }
 }

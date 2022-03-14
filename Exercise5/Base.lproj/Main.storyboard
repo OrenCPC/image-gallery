@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,24 +30,19 @@
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="SRg-mU-wyU">
-                                            <rect key="frame" x="81.5" y="81.5" width="37" height="37"/>
-                                            <color key="color" red="0.08557506650686264" green="0.34564527869224548" blue="0.94989711046218872" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </activityIndicatorView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9nM-eU-MkP">
-                                            <rect key="frame" x="-25" y="100" width="250" height="0.0"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9nM-eU-MkP">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="SRg-mU-wyU" firstAttribute="centerX" secondItem="xQs-5q-3JR" secondAttribute="centerX" id="7NR-dI-rH7"/>
-                                        <constraint firstItem="9nM-eU-MkP" firstAttribute="centerX" secondItem="SRg-mU-wyU" secondAttribute="centerX" id="hCB-3A-rON"/>
-                                        <constraint firstItem="SRg-mU-wyU" firstAttribute="centerY" secondItem="xQs-5q-3JR" secondAttribute="centerY" id="svt-dh-s33"/>
-                                        <constraint firstItem="9nM-eU-MkP" firstAttribute="centerY" secondItem="SRg-mU-wyU" secondAttribute="centerY" id="uir-sz-2be"/>
+                                        <constraint firstItem="9nM-eU-MkP" firstAttribute="leading" secondItem="xQs-5q-3JR" secondAttribute="leading" id="1F2-OB-OUx"/>
+                                        <constraint firstAttribute="bottom" secondItem="9nM-eU-MkP" secondAttribute="bottom" id="F3O-Pf-jiC"/>
+                                        <constraint firstAttribute="trailing" secondItem="9nM-eU-MkP" secondAttribute="trailing" id="ffS-XC-59d"/>
+                                        <constraint firstItem="9nM-eU-MkP" firstAttribute="top" secondItem="xQs-5q-3JR" secondAttribute="top" id="tgW-SL-SML"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
                                     <outlet property="imageView" destination="9nM-eU-MkP" id="qnI-du-Vbd"/>
-                                    <outlet property="spinner" destination="SRg-mU-wyU" id="v2N-PY-4jW"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -61,34 +55,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5jj-pi-HKo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="381" y="1850"/>
-        </scene>
-        <!--Image View Controller-->
-        <scene sceneID="eVQ-0Q-wXE">
-            <objects>
-                <viewController id="zAo-XP-Zlt" customClass="ImageViewController" customModule="Exercise5" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="LTu-Wx-2xV">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xeF-qU-0hx">
-                                <rect key="frame" x="-19" y="-22" width="444" height="916"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="tPI-0P-zIM"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="Wcb-P9-NFz"/>
-                            </scrollView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="PPr-vK-VMe"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="xeF-qU-0hx" firstAttribute="top" secondItem="LTu-Wx-2xV" secondAttribute="top" id="33B-3p-3Tr"/>
-                            <constraint firstAttribute="bottom" secondItem="xeF-qU-0hx" secondAttribute="bottom" id="HPc-Qy-wr4"/>
-                            <constraint firstAttribute="trailing" secondItem="xeF-qU-0hx" secondAttribute="trailing" id="dgw-C1-j3e"/>
-                            <constraint firstItem="xeF-qU-0hx" firstAttribute="leading" secondItem="LTu-Wx-2xV" secondAttribute="leading" id="yhX-LP-yiX"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wxd-mN-KsN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1136.231884057971" y="1176.5625"/>
         </scene>
         <!--Image Gallery Document Table View Controller-->
         <scene sceneID="3kn-t4-xgo">

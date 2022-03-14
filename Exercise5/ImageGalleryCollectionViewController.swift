@@ -9,15 +9,25 @@ import UIKit
 
 class ImageGalleryCollectionViewController: UICollectionViewController
 , UICollectionViewDelegateFlowLayout{
+        
+    var downloadedImages = Array<Photo>()
+    private lazy var imageGalleryModel = ImageGallery()
     
-//    private let reuseIdentifier = "Cell"
+    private var width: CGFloat = 300
     
-    private var images: [Photo] = []
-    private var imagesURL: [URL?] = []
+//    var flowLayout: UICollectionViewFlowLayout? {
+//    return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+//    }
     
-    private var width: CGFloat = 200 {
-        didSet {
-            
+    @objc func adjustImagesScale(byHandlingGestureRecognizedBy recognizer: UIPinchGestureRecognizer) {
+        switch recognizer.state {
+        case .changed, .ended:
+            self.width *= recognizer.scale
+            recognizer.scale = 1.0
+            print("width \(width)")
+//            flowLayout?.invalidateLayout()
+            self.collectionView.reloadData()
+        default: break
         }
     }
     
@@ -25,39 +35,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-    }
-    
-    private func fetchImage(imageUrl: URL?) {
-        if let url = imageUrl {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                let urlContents = try? Data(contentsOf: url)
-                if let imageData = urlContents {
-                    if let image = UIImage(data: imageData) {
-                        let imageWidth = image.size.width
-                        let imageHeight = image.size.height
-                        self?.images += [Photo(image: image, ratio: imageWidth/imageHeight)]
-                        self?.updateCollectionView()
-                    }
-                }
-            }
-        }
-    }
-    
-    private func startFetch() {
-        let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 3
-        
-        for index in 0..<imagesURL.count {
-            let op1 = BlockOperation(block: {
-                self.fetchImage(imageUrl: self.imagesURL[index]!)
-            })
-            
-            queue.addOperation(op1)
-        }
-        
-        queue.waitUntilAllOperationsAreFinished()
-        
-        updateCollectionView()
     }
     
 
@@ -71,10 +48,20 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
 
         // Do any additional setup after loading the view.
-        imagesURL = cassiniURLs.compactMap{ URL(string: $0) }
-        startFetch()
-//        model = imageGalleryModel(urls: cassiniURLs.compactMap{ URL(string: $0) })
+
+        updateViewFromModel()
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImagesScale(byHandlingGestureRecognizedBy:)))
+        collectionView?.addGestureRecognizer(pinch)
         
+        }
+
+    
+    
+    func updateViewFromModel() {
+        imageGalleryModel.getImages {images in
+            downloadedImages = images
+            }
+        updateCollectionView()
     }
     
     
@@ -90,37 +77,24 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 
     // MARK: UICollectionViewDataSource
     
-    var cassiniURLs = [ "https://ichef.bbci.co.uk/news/976/cpsprodpb/17419/production/_97775259_saturn.jpg",
-         "https://cdn.vox-cdn.com/thumbor/S_2OnmKwFbURIsaY5R0gGR1B6Pk=/0x0:3000x2000/620x413/filters:focal(1300x741:1780x1221):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/56671157/cassini.0.jpg"
-                        ,
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLGheJOf1gtzua1PYb_Qnq5OWkaoaiMhdP3Q&usqp=CAU",
-            "https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2004/06/saturn_orbit_insertion_manoeuvre2/17885286-2-eng-GB/Saturn_orbit_insertion_manoeuvre.jpg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJqmNdNdMDERRQZALWMNmZpFFXpJ5fRbjKAA&usqp=CAU"
-    ]
-    
-    
     func ratio(at indexPath: IndexPath) -> CGFloat {
-        return images[indexPath.item].ratio
+        return downloadedImages[indexPath.item].ratio
     }
 
     func image(at indexPath: IndexPath) -> UIImage {
-        return images[indexPath.item].image
+        return downloadedImages[indexPath.item].image
     }
 
     func calculatedSize(at indexPath: IndexPath)-> CGSize {
         let height = self.width / ratio(at: indexPath)
-        
         return CGSize(width: self.width, height: height)
     }
 
     
-    var flowLayout: UICollectionViewFlowLayout? {
-    return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-    }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return downloadedImages.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -138,7 +112,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         return calculatedSize(at: indexPath)
     }
 

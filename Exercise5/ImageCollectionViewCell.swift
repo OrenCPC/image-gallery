@@ -11,7 +11,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var image: UIImage? {
        get {
@@ -19,7 +18,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
        }
        set {
            imageView.image = newValue
-           spinner?.stopAnimating()
            self.addSubview(imageView)
        }
    }
