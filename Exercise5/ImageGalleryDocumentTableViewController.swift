@@ -20,16 +20,34 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     ///// Start of Model
     ///
     
-    var imageGalleryDocuments = ["One", "Two", "Three"]
-    
-    
-    
+    var imageGalleryDocuments = ["Space"]
     
     
     ///
     /////End Of Model
     ///
-
+    
+    @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
+        imageGalleryDocuments += ["Untitled".madeUnique(withRespectTo: imageGalleryDocuments)]
+        tableView.reloadData()
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "Space" :
+                if let cell = sender as? UITableViewCell,
+                   let indexPath = tableView.indexPath(for: cell),
+                   let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
+                    seguedToMVC.galleryName = imageGalleryDocuments[indexPath.row]
+//                    data[indexPath.section][indexPath.row]
+                }
+            default: break
+            }
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -39,9 +57,7 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return imageGalleryDocuments.count
-
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DocumentCell", for: indexPath)
@@ -52,10 +68,7 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
         return cell
     }
     
-    @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
-        imageGalleryDocuments += ["Untitled".madeUnique(withRespectTo: imageGalleryDocuments)]
-        tableView.reloadData()
-    }
+
     
     /*
     // Override to support conditional editing of the table view.

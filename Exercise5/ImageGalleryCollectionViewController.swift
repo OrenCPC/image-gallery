@@ -9,11 +9,13 @@ import UIKit
 
 class ImageGalleryCollectionViewController: UICollectionViewController
 , UICollectionViewDelegateFlowLayout{
-        
+    
     var downloadedImages = Array<Photo>()
+    
     private lazy var imageGalleryModel = ImageGallery()
     
     private var width: CGFloat = 300
+    
     
 //    var flowLayout: UICollectionViewFlowLayout? {
 //    return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
@@ -37,6 +39,21 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         }
     }
     
+    func updateViewFromModel() {
+        imageGalleryModel.getImages(galleryName: String) {images in
+            downloadedImages = images
+        }
+        updateCollectionView()
+    }
+    
+    var galleryName: String? {
+        didSet {
+            print(galleryName)
+            updateViewFromModel(newValue)
+        }
+    }
+
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +66,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 
         // Do any additional setup after loading the view.
 
-        updateViewFromModel()
+//        updateViewFromModel()
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImagesScale(byHandlingGestureRecognizedBy:)))
         collectionView?.addGestureRecognizer(pinch)
         
@@ -57,12 +74,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 
     
     
-    func updateViewFromModel() {
-        imageGalleryModel.getImages {images in
-            downloadedImages = images
-            }
-        updateCollectionView()
-    }
+    
     
     
     /*

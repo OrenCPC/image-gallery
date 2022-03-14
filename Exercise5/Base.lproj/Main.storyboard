@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qBK-V4-Lbm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Mdn-PL-z4G">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
@@ -51,10 +51,11 @@
                             <outlet property="delegate" destination="qBK-V4-Lbm" id="Cvb-cM-Fxn"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" id="iSA-Za-Eje"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5jj-pi-HKo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="381" y="1850"/>
+            <point key="canvasLocation" x="2152" y="78"/>
         </scene>
         <!--Image Gallery Document Table View Controller-->
         <scene sceneID="3kn-t4-xgo">
@@ -81,6 +82,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="qBK-V4-Lbm" kind="show" identifier="Space" id="nhC-x9-7Fk"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
