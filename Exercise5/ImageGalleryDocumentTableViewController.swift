@@ -19,13 +19,18 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if let identifier = segue.identifier {
             switch identifier {
             case "Space" :
                 if let cell = sender as? UITableViewCell,
                    let indexPath = tableView.indexPath(for: cell),
                    let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
-                    seguedToMVC.galleryName = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
+                    if indexPath.section == 0 {
+                        seguedToMVC.galleryName = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
+                    } else{
+                        print("Undelete the gallery")
+                    }
                 }
             default: break
             }
@@ -35,15 +40,8 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     
-    
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return tableModel.title(at: section)
-//    }
-    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-//        view.backgroundColor = UIColor.red
-             
         let lbl = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 15, height: 40))
         lbl.text = tableModel.data[section].sectionName
         view.addSubview(lbl)
@@ -86,13 +84,36 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     }
     */
 
+    override func tableView(_ tableView: UITableView,
+                                     leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+            let action = UIContextualAction(style: .normal, title: title,
+                handler: { (action, view, completionHandler) in
+                
+                let deletedRow = self.tableModel.data[indexPath.section].sectionGalleries?.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                self.tableModel.data[0].sectionGalleries! += [deletedRow!]
+                
+                // Update data source when user taps action
+//                self.dataSource?.setFavorite(!favorite, at: indexPath)
+                completionHandler(true)
+                tableView.reloadData()
+                
+              })
+            let configuration = UISwipeActionsConfiguration(actions: [action])
+//        tableView.reloadData()
+            return configuration
+        
+        
+    }
+
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
             
-            var deletedRow = tableModel.data[indexPath.section].sectionGalleries?.remove(at: indexPath.row)
+            let deletedRow = tableModel.data[indexPath.section].sectionGalleries?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
 
             switch tableModel.data[indexPath.section].sectionName {
