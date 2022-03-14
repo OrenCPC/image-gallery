@@ -17,22 +17,39 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     private lazy var tableModel = GalleryNamesTableModel()
 
     
+    override func shouldPerformSegue(withIdentifier identifier: String,
+                                          sender: Any?) -> Bool {
+        switch identifier {
+        case "Space" :
+            if let cell = sender as? UITableViewCell,
+               let indexPath = tableView.indexPath(for: cell) {
+                if indexPath.section == 0 {
+                    return true
+                }
+            }
+        default: break
+        }
+        return false
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let identifier = segue.identifier {
-            switch identifier {
-            case "Space" :
-                if let cell = sender as? UITableViewCell,
-                   let indexPath = tableView.indexPath(for: cell),
-                   let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
-                    if indexPath.section == 0 {
-                        seguedToMVC.galleryName = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
-                    } else{
-                        print("Undelete the gallery")
+            if shouldPerformSegue(withIdentifier: identifier, sender: sender as? UITableViewCell) {
+                switch identifier {
+                case "Space" :
+                    if let cell = sender as? UITableViewCell,
+                       let indexPath = tableView.indexPath(for: cell),
+                       let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
+                        if indexPath.section == 0 {
+                            seguedToMVC.galleryName = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
+                        } else{
+                            print("Undelete the gallery")
+                        }
                     }
+                default: break
                 }
-            default: break
             }
         }
     }
