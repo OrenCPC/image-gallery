@@ -15,7 +15,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     private lazy var imageGalleryModel = ImageGallery()
     
     private var width: CGFloat = 300
-    
+        
     
 //    var flowLayout: UICollectionViewFlowLayout? {
 //    return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
@@ -40,16 +40,16 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     }
     
     func updateViewFromModel() {
-        imageGalleryModel.getImages(galleryName: String) {images in
+        imageGalleryModel.getImages(galleryName: galleryName!) {images in
             downloadedImages = images
         }
         updateCollectionView()
     }
     
-    var galleryName: String? {
+    var galleryName: String?{
         didSet {
             print(galleryName)
-            updateViewFromModel(newValue)
+            updateViewFromModel()
         }
     }
 

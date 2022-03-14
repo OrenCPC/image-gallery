@@ -41,6 +41,9 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                    let indexPath = tableView.indexPath(for: cell),
                    let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
                     seguedToMVC.galleryName = imageGalleryDocuments[indexPath.row]
+                    //How to set the galleryName?
+                    
+                    
 //                    data[indexPath.section][indexPath.row]
                 }
             default: break
