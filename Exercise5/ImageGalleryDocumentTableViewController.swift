@@ -9,10 +9,6 @@ import UIKit
 
 class ImageGalleryDocumentTableViewController: UITableViewController {
     
-//    @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
-//        imageGalleryDocuments += ["Untitled".madeUnique(withRespectTo: imageGalleryDocuments)]
-//        tableView.reloadData()
-//    }
     
     private lazy var tableModel = GalleryNamesTableModel()
 
@@ -42,11 +38,7 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                     if let cell = sender as? UITableViewCell,
                        let indexPath = tableView.indexPath(for: cell),
                        let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
-                        if indexPath.section == 0 {
-                            seguedToMVC.galleryName = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
-                        } else{
-                            print("Undelete the gallery")
-                        }
+                        seguedToMVC.galleryName = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
                     }
                 default: break
                 }
@@ -56,6 +48,12 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
+    
+    //TODO: handle situation when a gallery is deleted and a new one is being added
+    @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
+        tableModel.data[0].sectionGalleries! += ["Untitled".madeUnique(withRespectTo: tableModel.data[0].sectionGalleries!)]
+        tableView.reloadData()
+    }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))

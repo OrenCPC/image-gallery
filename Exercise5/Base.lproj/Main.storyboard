@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,6 +44,7 @@
                                 </collectionViewCellContentView>
                                 <connections>
                                     <outlet property="imageView" destination="9nM-eU-MkP" id="qnI-du-Vbd"/>
+                                    <segue destination="eU4-dI-yHy" kind="show" identifier="cellToImage" id="MCt-38-0Su"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -56,6 +58,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5jj-pi-HKo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2152" y="78"/>
+        </scene>
+        <!--Image View Controller-->
+        <scene sceneID="rpB-aS-YdE">
+            <objects>
+                <viewController id="eU4-dI-yHy" customClass="ImageViewController" customModule="Exercise5" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jxd-2X-fTr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jBC-EQ-1h3">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="CpR-RV-r1s"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Nm0-py-poX"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="OiD-7w-qQc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OpS-rG-agP"/>
+                    <connections>
+                        <outlet property="scrollView" destination="jBC-EQ-1h3" id="l0c-SS-TWz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mZ2-uf-Adz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3088.4057971014495" y="102.45535714285714"/>
         </scene>
         <!--Image Gallery Document Table View Controller-->
         <scene sceneID="3kn-t4-xgo">

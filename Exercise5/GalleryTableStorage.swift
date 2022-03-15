@@ -9,6 +9,5 @@ import Foundation
 struct GalleryTableStorage {
     
     var imageGalleryDocuments : [String]
-    
     var recentlyDeletedImages : [String]
 }
