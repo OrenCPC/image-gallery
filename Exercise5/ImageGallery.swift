@@ -80,7 +80,10 @@ class ImageGallery {
     
     func getImages(galleryName: String?, onComplete: ([Photo]) -> Void) {
         self.galleryNameModel = galleryName!
-        self.imagesURL = dict[galleryNameModel]!.compactMap{ URL(string: $0) }
+        if let galleryValidName = dict[galleryNameModel] {
+            self.imagesURL = galleryValidName.compactMap{ URL(string: $0) }
+        }
+//        self.imagesURL = dict[galleryNameModel]!.compactMap{ URL(string: $0) }
         self.images = []
         fetchImages {
             onComplete(images)

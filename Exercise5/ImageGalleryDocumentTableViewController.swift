@@ -9,6 +9,7 @@ import UIKit
 
 class ImageGalleryDocumentTableViewController: UITableViewController {
     
+
     
     private lazy var tableModel = GalleryNamesTableModel()
 
@@ -48,8 +49,6 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
-    
-    //TODO: handle situation when a gallery is deleted and a new one is being added
     @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
         tableModel.data[0].sectionGalleries! += ["Untitled".madeUnique(withRespectTo: tableModel.data[0].sectionGalleries!)]
         tableView.reloadData()
