@@ -103,43 +103,19 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     }
 
     
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if let identifier == "cellToImage" {
-//                if let cell = sender as? ImageCollectionViewCell,
-//                   let indexPath = collectionView.indexPath(for: cell),
-//                   let seguedToMVC = segue.destination as? ImageGallery {
-//                    seguedToMVC.images = imageGalleryModel.images[selectedIndexPath!.row].image
-//                }
-//
-//            }
-//        }
-//
-//
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//        if segue.identifier == "cellToImage"{
-//
-//            if let selectedIndexPath = sender as? collec {
-//                if let imageVC = segue.destination as? ImageViewController{
-//                    imageVC.imageView.image = imageGalleryModel.images[selectedIndexPath.row].image
-//
-//                }
-//            }
-//
-//
-//
-//        }
-//    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as?
-            ImageViewController, let index =
-            collectionView.indexPathsForSelectedItems?.first {
-            destination.didSegue = true
-            destination.imageView.image = imageGalleryModel.images[index.row].image
+        if let segueIdentifier = segue.identifier,
+           let destinationVC = segue.destination as? ImageViewController,
+            let firstSelectedItem = collectionView.indexPathsForSelectedItems?.first,
+           segueIdentifier == "cellToImage" {
+            destinationVC.image = self.imageGalleryModel.images[firstSelectedItem.row].image
+            print(self.imageGalleryModel.images[firstSelectedItem.row].ratio)
         }
+    }
+
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: IndexPath) {
+        performSegue(withIdentifier: "cellToImage", sender: self)
     }
         
     
