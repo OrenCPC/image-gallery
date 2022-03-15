@@ -57,6 +57,10 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         let lbl = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 15, height: 40))
+        
+        
+        
+        
         lbl.text = tableModel.data[section].sectionName
         view.addSubview(lbl)
            return view
@@ -72,14 +76,33 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
         return tableModel.data[section].sectionGalleries?.count ?? 0
     }
     
+    func updateCollectionViewFromTableView() {
+//        let listOfGalleries = 
+    }
+    
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DocumentCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath)
 
         // Configure the cell...
+        if let inputCell = cell as? MyTableViewCell {
+            inputCell.resignationHandler = { [weak self, unowned inputCell] in
+                if let text = inputCell.textField.text {
+                    self?.tableModel.data[indexPath.section].sectionGalleries?[indexPath.row] = text
+                }
+                self?.updateCollectionViewFromTableView()
+                self?.tableView.reloadData()
+                
+            }
+        }
         cell.textLabel?.text = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
+        
 
         return cell
     }
+    
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
            return 40
     }

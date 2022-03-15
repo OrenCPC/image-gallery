@@ -15,7 +15,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     private lazy var imageGalleryModel = ImageGallery()
     
     private var width: CGFloat = 300
-        
+
+    let defaults = UserDefaults.standard
+
     
 //    var flowLayout: UICollectionViewFlowLayout? {
 //    return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
@@ -46,9 +48,28 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         updateCollectionView()
     }
     
+    
+    
+    ///
+    ///
+    ///
+    ///
+//    func updateViewFromModel() {
+//        downloadedImages = defaults.object(forKey:"downloaded images") as? [Photo] ?? [Photo]()
+//        if downloadedImages.count == 0 {
+//            imageGalleryModel.getImages(galleryName: galleryName!) {images in
+//                downloadedImages = images
+//                defaults.set(downloadedImages, forKey: "downloaded images")
+//            }
+//        }
+//        updateCollectionView()
+//    }
+    ///
+    ///
+    ///
+    ///
     var galleryName: String?{
         didSet {
-            print(galleryName)
             updateViewFromModel()
         }
     }
