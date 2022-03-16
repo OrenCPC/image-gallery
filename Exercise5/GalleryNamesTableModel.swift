@@ -21,6 +21,6 @@ struct GalleryNamesTableModel {
 //    }
     
     init() {
-        data += [Section(sectionName: "imageGalleryDocuments", sectionGalleries: ["Space"]), Section(sectionName: "recentlyDeletedImages", sectionGalleries: [])]
+        data += [Section(sectionName: "imageGalleryDocuments", sectionGalleries: ["Space","World"]), Section(sectionName: "recentlyDeletedImages", sectionGalleries: [])]
     }
 }

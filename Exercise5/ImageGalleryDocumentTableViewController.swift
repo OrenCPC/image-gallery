@@ -17,7 +17,7 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     override func shouldPerformSegue(withIdentifier identifier: String,
                                           sender: Any?) -> Bool {
         switch identifier {
-        case "Space" :
+        case "TableToGallery" :
             if let cell = sender as? UITableViewCell,
                let indexPath = tableView.indexPath(for: cell) {
                 if indexPath.section == 0 {
@@ -31,11 +31,10 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if let identifier = segue.identifier {
             if shouldPerformSegue(withIdentifier: identifier, sender: sender as? UITableViewCell) {
                 switch identifier {
-                case "Space" :
+                case "TableToGallery" :
                     if let cell = sender as? UITableViewCell,
                        let indexPath = tableView.indexPath(for: cell),
                        let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {

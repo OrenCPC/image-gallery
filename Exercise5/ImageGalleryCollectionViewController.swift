@@ -14,7 +14,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     
     private lazy var imageGalleryModel = ImageGallery()
     
-    private var width: CGFloat = 300
+    private var width: CGFloat = 400
 
     let defaults = UserDefaults.standard
 
