@@ -8,5 +8,5 @@
 import Foundation
 struct Section {
     var sectionName: String?
-    var sectionGalleries: [String]?
+    var sectionGalleries: [ImageGallery]
 }

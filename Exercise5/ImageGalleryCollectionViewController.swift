@@ -10,9 +10,9 @@ import UIKit
 class ImageGalleryCollectionViewController: UICollectionViewController
 , UICollectionViewDelegateFlowLayout{
     
-    var downloadedImages = Array<Photo>()
+//    var downloadedImages = Array<Photo>()
     
-    private lazy var imageGalleryModel = ImageGallery()
+    private lazy var imageGalleryModel = ImageCollectionViewModel()
     
     private var width: CGFloat = 400
 
@@ -42,33 +42,20 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     }
     
     func updateViewFromModel() {
-        imageGalleryModel.getImages(galleryName: galleryName!) {images in
-            downloadedImages = images
+        imageGalleryModel.getImages(gallery: gallery!) {images in
+            gallery!.images = images
+//            downloadedImages = images
         }
         updateCollectionView()
     }
     
-    
-    
-    ///
-    ///
-    ///
-    ///
-//    func updateViewFromModel() {
-//        downloadedImages = defaults.object(forKey:"downloaded images") as? [Photo] ?? [Photo]()
-//        if downloadedImages.count == 0 {
-//            imageGalleryModel.getImages(galleryName: galleryName!) {images in
-//                downloadedImages = images
-//                defaults.set(downloadedImages, forKey: "downloaded images")
-//            }
+//    var galleryName: String?{
+//        didSet {
+//            updateViewFromModel()
 //        }
-//        updateCollectionView()
 //    }
-    ///
-    ///
-    ///
-    ///
-    var galleryName: String?{
+    
+    var gallery: ImageGallery?{
         didSet {
             updateViewFromModel()
         }
@@ -111,11 +98,13 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     // MARK: UICollectionViewDataSource
     
     func ratio(at indexPath: IndexPath) -> CGFloat {
-        return downloadedImages[indexPath.item].ratio
+        return gallery!.images[indexPath.item].ratio
+//        return downloadedImages[indexPath.item].ratio
     }
 
     func image(at indexPath: IndexPath) -> UIImage {
-        return downloadedImages[indexPath.item].image
+        return gallery!.images[indexPath.item].image
+//        return downloadedImages[indexPath.item].image
     }
 
     func calculatedSize(at indexPath: IndexPath)-> CGSize {
@@ -123,6 +112,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         return CGSize(width: self.width, height: height)
     }
 
+    //Segue need to be updated
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueIdentifier = segue.identifier,
@@ -141,7 +131,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController
         
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return downloadedImages.count
+        
+        return gallery?.images.count ?? 0
+//        return downloadedImages.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -154,6 +146,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 
         if let imageCell = cell as? ImageCollectionViewCell {
             imageCell.image = image(at: indexPath).resizeImageTo(size: calculatedSize(at: indexPath))
+//            imageCell.image = image(at: indexPath).resizeImageTo(size: calculatedSize(at: indexPath))
         }
     }
     

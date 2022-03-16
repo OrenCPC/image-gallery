@@ -11,7 +11,6 @@ class MyTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBOutlet weak var textField: UITextField! {
         didSet {
-
             textField.delegate = self
         }
     }
