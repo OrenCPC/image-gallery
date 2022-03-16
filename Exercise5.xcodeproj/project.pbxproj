@@ -20,7 +20,6 @@
 		68A48FE327D65BF3009AA2AA /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A48FE227D65BF3009AA2AA /* Photo.swift */; };
 		68D75E4327E0E63700DC0562 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D75E4227E0E63700DC0562 /* MyTableViewCell.swift */; };
 		68D974AA27DF6BE100B4F950 /* GalleryNamesTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D974A927DF6BE100B4F950 /* GalleryNamesTableModel.swift */; };
-		68D974AC27DF78CC00B4F950 /* GalleryTableStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D974AB27DF78CC00B4F950 /* GalleryTableStorage.swift */; };
 		68D974B027DF7DEA00B4F950 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D974AF27DF7DEA00B4F950 /* Section.swift */; };
 		68FCDF7127DE04BA00600361 /* ImageGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FCDF7027DE04BA00600361 /* ImageGallery.swift */; };
 /* End PBXBuildFile section */
@@ -41,7 +40,6 @@
 		68A48FE227D65BF3009AA2AA /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		68D75E4227E0E63700DC0562 /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		68D974A927DF6BE100B4F950 /* GalleryNamesTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryNamesTableModel.swift; sourceTree = "<group>"; };
-		68D974AB27DF78CC00B4F950 /* GalleryTableStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryTableStorage.swift; sourceTree = "<group>"; };
 		68D974AF27DF7DEA00B4F950 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		68FCDF7027DE04BA00600361 /* ImageGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,14 +77,13 @@
 				681524A227CF653E004F5F1A /* Supporting Files */,
 				6815249027CF6356004F5F1A /* SceneDelegate.swift */,
 				6815249427CF6356004F5F1A /* Main.storyboard */,
-				6843658327E087EF00DF5DAC /* ImageViewController.swift */,
 				681524A927CF8FF9004F5F1A /* ImageGalleryCollectionViewController.swift */,
-				68D75E4227E0E63700DC0562 /* MyTableViewCell.swift */,
+				681524AD27D4B7EB004F5F1A /* ImageCollectionViewCell.swift */,
 				68FCDF7027DE04BA00600361 /* ImageGallery.swift */,
 				68A48FE227D65BF3009AA2AA /* Photo.swift */,
-				68D974AB27DF78CC00B4F950 /* GalleryTableStorage.swift */,
-				681524AD27D4B7EB004F5F1A /* ImageCollectionViewCell.swift */,
+				6843658327E087EF00DF5DAC /* ImageViewController.swift */,
 				681524A727CF6FA9004F5F1A /* ImageGalleryDocumentTableViewController.swift */,
+				68D75E4227E0E63700DC0562 /* MyTableViewCell.swift */,
 				68D974A927DF6BE100B4F950 /* GalleryNamesTableModel.swift */,
 				68D974AF27DF7DEA00B4F950 /* Section.swift */,
 				681524A327CF65BF004F5F1A /* Utilities.swift */,
@@ -181,7 +178,6 @@
 				6815248F27CF6356004F5F1A /* AppDelegate.swift in Sources */,
 				681524A827CF6FA9004F5F1A /* ImageGalleryDocumentTableViewController.swift in Sources */,
 				68D974B027DF7DEA00B4F950 /* Section.swift in Sources */,
-				68D974AC27DF78CC00B4F950 /* GalleryTableStorage.swift in Sources */,
 				68D75E4327E0E63700DC0562 /* MyTableViewCell.swift in Sources */,
 				681524AE27D4B7EB004F5F1A /* ImageCollectionViewCell.swift in Sources */,
 				681524AA27CF8FF9004F5F1A /* ImageGalleryCollectionViewController.swift in Sources */,

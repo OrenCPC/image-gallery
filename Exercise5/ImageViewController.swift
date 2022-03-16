@@ -36,7 +36,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        image = nil
     }
     
     

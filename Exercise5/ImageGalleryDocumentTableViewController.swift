@@ -56,10 +56,6 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         let lbl = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 15, height: 40))
-        
-        
-        
-        
         lbl.text = tableModel.data[section].sectionName
         view.addSubview(lbl)
            return view
@@ -83,21 +79,22 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath)
-
         // Configure the cell...
+        
         if let inputCell = cell as? MyTableViewCell {
             inputCell.resignationHandler = { [weak self, unowned inputCell] in
                 if let text = inputCell.textField.text {
-                    self?.tableModel.data[indexPath.section].sectionGalleries?[indexPath.row] = text
+                    self?.tableModel.addRow(at: indexPath, with : text)
+//                    self?.tableModel.data[indexPath.section].sectionGalleries?[indexPath.row] = text
                 }
-                self?.updateCollectionViewFromTableView()
+//                self?.updateCollectionViewFromTableView()
                 self?.tableView.reloadData()
-                
             }
+            inputCell.textField.text = tableModel.getRow(at: indexPath)
         }
-        cell.textLabel?.text = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
         
-
+//        cell.textLabel?.text = tableModel.getRow(at: indexPath)
+//        cell.textLabel?.text = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
         return cell
     }
     
@@ -120,30 +117,19 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     }
     */
 
-    override func tableView(_ tableView: UITableView,
-                                     leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-            let action = UIContextualAction(style: .normal, title: title,
-                handler: { (action, view, completionHandler) in
-                
-                let deletedRow = self.tableModel.data[indexPath.section].sectionGalleries?.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                
-                self.tableModel.data[0].sectionGalleries! += [deletedRow!]
-                
-                // Update data source when user taps action
-//                self.dataSource?.setFavorite(!favorite, at: indexPath)
-                completionHandler(true)
-                tableView.reloadData()
-                
-              })
-            let configuration = UISwipeActionsConfiguration(actions: [action])
-//        tableView.reloadData()
-            return configuration
-        
-        
-    }
 
     
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            // Delete the row from the data source
+//            tableModel.deleteRow(at: indexPath)
+//            self.tableView.deleteRows(at: [indexPath], with: .fade)
+//
+//            tableView.reloadData()
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }
+//    }
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -151,12 +137,10 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
             
             let deletedRow = tableModel.data[indexPath.section].sectionGalleries?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-
             switch tableModel.data[indexPath.section].sectionName {
                 case "imageGalleryDocuments":
                 tableModel.data[indexPath.section + 1].sectionGalleries! += [deletedRow!]
                 //Add to recently deleted
-
                 default:
                 //Do nothing
                 break
@@ -167,6 +151,43 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
+    
+    
+    override func tableView(_ tableView: UITableView,
+                                         leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+                let action = UIContextualAction(style: .normal, title: title,
+                    handler: { (action, view, completionHandler) in
+                    
+                    let deletedRow = self.tableModel.data[indexPath.section].sectionGalleries?.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    self.tableModel.data[0].sectionGalleries! += [deletedRow!]
+                    
+                    // Update data source when user taps action
+    //                self.dataSource?.setFavorite(!favorite, at: indexPath)
+                    completionHandler(true)
+                    tableView.reloadData()
+                    
+                  })
+                let configuration = UISwipeActionsConfiguration(actions: [action])
+    //        tableView.reloadData()
+                return configuration
+            
+            
+        }
+    
+//    // Override to support editing the table view.
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            // Delete the row from the data source
+//            tableModel.deleteRow(at: indexPath)
+//            self.tableView.deleteRows(at: [indexPath], with: .fade)
+//
+//            tableView.reloadData()
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }
+//    }
     
 
     /*

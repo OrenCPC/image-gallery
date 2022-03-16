@@ -43,13 +43,12 @@ class MyTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         // Initialization code
         
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapFunc))
-        doubleTap.numberOfTapsRequired = 2
-        self.addGestureRecognizer(doubleTap)
+        
     }
     
     
     @objc func doubleTapFunc() {
+        textField.clearsOnBeginEditing = true
         textField.isEnabled = true
 
         
