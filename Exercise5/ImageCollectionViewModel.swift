@@ -8,11 +8,9 @@ import UIKit
 
 import Foundation
 class ImageCollectionViewModel {
-    
+        
     var images : [Photo] = []
-    
-//    var currentGallery: ImageGallery = ImageGallery()
-    
+        
     private func fetchImage(imageUrl: URL?) {
         if let url = imageUrl?.imageURL {
             //            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -44,22 +42,7 @@ class ImageCollectionViewModel {
     }
     
     func getImages(gallery: ImageGallery, onComplete: ([Photo]) -> Void) {
-//        self.galleryNameModel = galleryName!
-//        if let galleryValidName = dict[galleryNameModel] {
-//            var allImagesUrl = galleryValidName.compactMap{ URL(string: $0) }
-//            for _ in 0...1 {
-//                if let randomElement = allImagesUrl.randomElement() {
-//                    if let index = allImagesUrl.firstIndex(of: randomElement) {
-//                        allImagesUrl.remove(at: index) // array is now ["world"]
-//                        self.imagesURL += [randomElement]
-//                    }
-//                }
-//            }
-//        }
-//        self.images = []
-        ///Delete all above
-        
-//        self.currentGallery = gallery!
+        self.images = []
         fetchImages(gallery: gallery) {
             onComplete(images)
         }

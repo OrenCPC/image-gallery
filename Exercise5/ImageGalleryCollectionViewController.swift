@@ -16,12 +16,10 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     
     private var width: CGFloat = 400
 
-    let defaults = UserDefaults.standard
+//    let defaults = UserDefaults.standard
+    var gallery: ImageGallery?
 
-    
-//    var flowLayout: UICollectionViewFlowLayout? {
-//    return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-//    }
+
     
     @objc func adjustImagesScale(byHandlingGestureRecognizedBy recognizer: UIPinchGestureRecognizer) {
         switch recognizer.state {
@@ -42,20 +40,14 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     }
     
     func updateViewFromModel() {
-        imageGalleryModel.getImages(gallery: gallery!) {images in
-            gallery!.images = images
-//            downloadedImages = images
+        imageGalleryModel.getImages(gallery: galleryWithoutImages!) {images in
+            gallery = galleryWithoutImages
+            gallery?.images = images
         }
         updateCollectionView()
     }
     
-//    var galleryName: String?{
-//        didSet {
-//            updateViewFromModel()
-//        }
-//    }
-    
-    var gallery: ImageGallery?{
+    var galleryWithoutImages: ImageGallery?{
         didSet {
             updateViewFromModel()
         }
@@ -65,16 +57,10 @@ class ImageGalleryCollectionViewController: UICollectionViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
 
-        // Do any additional setup after loading the view.
-
-//        updateViewFromModel()
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(adjustImagesScale(byHandlingGestureRecognizedBy:)))
         collectionView?.addGestureRecognizer(pinch)
         

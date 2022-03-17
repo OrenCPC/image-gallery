@@ -36,7 +36,7 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                     if let cell = sender as? UITableViewCell,
                        let indexPath = tableView.indexPath(for: cell),
                        let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
-                        seguedToMVC.gallery = tableModel.imageGalleries[indexPath.row]
+                        seguedToMVC.galleryWithoutImages = tableModel.imageGalleries[indexPath.row]
 //                        tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
                     }
                 default: break
