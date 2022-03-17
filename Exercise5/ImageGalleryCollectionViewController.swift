@@ -9,9 +9,7 @@ import UIKit
 
 class ImageGalleryCollectionViewController: UICollectionViewController
 , UICollectionViewDelegateFlowLayout{
-    
-//    var downloadedImages = Array<Photo>()
-    
+        
     private lazy var imageGalleryModel = ImageCollectionViewModel()
     
     private var width: CGFloat = 400
@@ -52,8 +50,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
             updateViewFromModel()
         }
     }
-
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()

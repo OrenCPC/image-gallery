@@ -49,11 +49,12 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
 
     //TODO: Change so not only untitled will be added
     @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
-//        let newImageGallery = ImageGallery(imagesURL: [], galleryName: "Untitled".madeUnique(withRespectTo: tableModel.imageGalleries.map{ $0.galleryName })
-//        tableModel.imageGalleries += ["Untitled".madeUnique(withRespectTo: tableModel.data[0].sectionGalleries!)]
-                let newImageGallery = ImageGallery(imagesURL: [], galleryName: "Untitled")
-
-//        tableModel.data[0].sectionGalleries! += ["Untitled".madeUnique(withRespectTo: tableModel.data[0].sectionGalleries!)]
+        let randomUrlIndex = Int(arc4random_uniform(UInt32(tableModel.randomUrls.count)))
+        let urls = [tableModel.randomUrls[randomUrlIndex]]
+        let newImageGallery = ImageGallery(imagesURL: urls.compactMap{ URL(string: $0) },
+                                           galleryName: "Untitled".madeUnique(withRespectTo:
+                                                                                (tableModel.imageGalleries.map{ $0.galleryName})+(tableModel.deletedImageGalleries.map{ $0.galleryName })))
+        tableModel.imageGalleries += [newImageGallery]
         tableView.reloadData()
     }
     

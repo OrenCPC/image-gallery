@@ -23,14 +23,17 @@ struct GalleryNamesTableModel {
                             "https://i.natgeofe.com/n/c864cd91-f26b-4db5-bd62-3e97dc7358c9/temple-mount-jerusalem-israel_3x4.jpg",
                             "https://cms.finnair.com/resource/blob/673478/e5b938b6188640b6fe0d18442f66229e/melbourne-main-data.jpg"
                            ]
+                 
     ]
     
-//    var dictForNewGalleries = [ "images" : ["https://cdn.vox-cdn.com/thumbor/3X87MbCapoDX9oPTxX6Ab8Kuti0=/0x0:5472x3648/1200x675/filters:focal(2299x1387:3173x2261)/cdn.vox-cdn.com/uploads/chorus_image/image/69115492/GettyImages_1231075827.0.jpg",
-//                                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlIAJelOgwRkZmg7muy4RD-oVv1zu8nfbIyA&usqp=CAU",
-//                                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPlpFrXi-VKusNFLz3AuE2KuTTwRpQr8OGUQ&usqp=CAU"
-//                                          ]]
-//
-//    var data : Array<Section> = []
+    var randomUrls =   ["https://i.natgeofe.com/k/75ac774d-e6c7-44fa-b787-d0e20742f797/giant-panda-eating_16x9.jpg",
+                                 "https://a-z-animals.com/media/2021/01/Wild-Chameleon-Reptile-With-Beautiful-Colors-400x300.jpg",
+                                 "https://i.natgeofe.com/k/c02b35d2-bfd7-4ed9-aad4-8e25627cd481/komodo-dragon-head-on_2x1.jpg",
+                        "https://media.gadventures.com/media-server/cache/2d/c6/2dc661088449cb78e02345d8c261e8b1.jpg",
+                        "https://smashinghub.com/wp-content/uploads/2010/07/wave8.jpg",
+                        "https://clicklovegrow.com/wp-content/uploads/2020/01/Leeza-Wishart-Graduaste.jpg"
+                                ]
+    
     
 //    mutating func addRow(at indexPath: IndexPath, with text: String) {
 //        self.data[indexPath.section].sectionGalleries?[indexPath.row] = text
@@ -45,12 +48,5 @@ struct GalleryNamesTableModel {
             let urls = stringUrls.compactMap{ URL(string: $0) }
             self.imageGalleries += [ImageGallery(imagesURL: urls, galleryName: name)]
         }
-        
-        /////Needs to be deleted
-//        data += [Section(sectionName: "imageGalleryDocuments", sectionGalleries: [])]
-//        for index in 0..<imageGalleries.count {
-//            data[0].sectionGalleries! += [imageGalleries[index].galleryName]
-//        }
-//        data += [Section(sectionName: "recentlyDeletedImages", sectionGalleries: [])]
     }
 }
