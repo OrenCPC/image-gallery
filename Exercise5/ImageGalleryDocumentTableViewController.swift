@@ -37,7 +37,6 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                        let indexPath = tableView.indexPath(for: cell),
                        let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
                         seguedToMVC.galleryWithoutImages = tableModel.imageGalleries[indexPath.row]
-//                        tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
                     }
                 default: break
                 }
@@ -47,28 +46,15 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
-    //TODO: Change so not only untitled will be added
     @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
-        let randomUrlIndex = Int(arc4random_uniform(UInt32(tableModel.randomUrls.count)))
-        let urls = [tableModel.randomUrls[randomUrlIndex]]
-        let newImageGallery = ImageGallery(imagesURL: urls.compactMap{ URL(string: $0) },
-                                           galleryName: "Untitled".madeUnique(withRespectTo:
-                                                                                (tableModel.imageGalleries.map{ $0.galleryName})+(tableModel.deletedImageGalleries.map{ $0.galleryName })))
-        tableModel.imageGalleries += [newImageGallery]
+        tableModel.createNewGallery()
         tableView.reloadData()
     }
-    
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-//        let lbl = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 15, height: 40))
-//        lbl.text = tableModel.data[section].sectionName
-//        view.addSubview(lbl)
-//           return view
-//         }
+
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return "ImageGals"
-        case 1: return "RecentlyDeleted"
+        case 0: return "Image Galleries"
+        case 1: return "Recently Deleted Image Galleries"
         default: return ""
        }
     }
@@ -84,39 +70,21 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
         case 1: return tableModel.deletedImageGalleries.count
         default: return 0
         }
-//        return tableModel.data[section].sectionGalleries?.count ?? 0
     }
     
     
-    //TODO: NOT COMPLETE
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath)
         // Configure the cell...
         
         if let inputCell = cell as? MyTableViewCell {
-            
-//            inputCell.resignationHandler = { [weak self, unowned inputCell] in
-//                if let text = inputCell.textField.text {
-//                    self?.tableModel.addRow(at: indexPath, with : text)
-////                    self?.tableModel.data[indexPath.section].sectionGalleries?[indexPath.row] = text
-//                }
-////                self?.updateCollectionViewFromTableView()
-//                self?.tableView.reloadData()
-//            }
             switch indexPath.section {
             case 0: inputCell.textField.text = tableModel.imageGalleries[indexPath.row].galleryName
             case 1: inputCell.textField.text = tableModel.deletedImageGalleries[indexPath.row].galleryName
             default: break
-
+                
             }
-//            inputCell.textField.text = tableModel.imageGalleries[indexPath.section]
-            
-            
-//            inputCell.textField.text = tableModel.getRow(at: indexPath)
         }
-        
-//        cell.textLabel?.text = tableModel.getRow(at: indexPath)
-//        cell.textLabel?.text = tableModel.data[indexPath.section].sectionGalleries?[indexPath.row]
         return cell
     }
     
@@ -157,33 +125,20 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             switch indexPath.section {
+                
             case 0:
-                let deletedRow = tableModel.imageGalleries.remove(at: indexPath.row)
+                let deletedGallery = tableModel.deleteFromImageGallery(at: indexPath)
                 tableView.deleteRows(at: [indexPath], with: .fade)
-                tableModel.deletedImageGalleries += [deletedRow]
+                tableModel.addToDeletedGallery(gallery: deletedGallery)
                 
             case 1:
-                tableModel.deletedImageGalleries.remove(at: indexPath.row)
+                tableModel.deleteFromDeletedImageGallery(at: indexPath)
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 
             default: break
             }
-            
-//            let deletedRow = tableModel.data[indexPath.section].sectionGalleries?.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//
-//            switch tableModel.data[indexPath.section].sectionName {
-//                case "imageGalleryDocuments":
-//                tableModel.data[indexPath.section + 1].sectionGalleries! += [deletedRow!]
-//                //Add to recently deleted
-//                default:
-//                //Do nothing
-//                break
-//            }
             tableView.reloadData()
             
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
@@ -194,11 +149,13 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                     handler: { (action, view, completionHandler) in
                     
                     switch indexPath.section {
+                        
                     case 0:break
+                        
                     case 1:
-                        let deletedRow = self.tableModel.deletedImageGalleries.remove(at: indexPath.row)
+                        let deletedRow = self.tableModel.deleteFromDeletedImageGallery(at: indexPath)
                         tableView.deleteRows(at: [indexPath], with: .fade)
-                        self.tableModel.imageGalleries += [deletedRow]
+                        self.tableModel.addToImageGallery(gallery: deletedRow)
 
                     default: break
                     }
@@ -207,7 +164,6 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                     
                   })
                 let configuration = UISwipeActionsConfiguration(actions: [action])
-    //        tableView.reloadData()
                 return configuration
         }
     
