@@ -8,14 +8,17 @@
 import UIKit
 
 class MyTableViewCell: UITableViewCell, UITextFieldDelegate {
+
+    private lazy var myTableView = ImageGalleryDocumentTableViewController()
+
     
     @IBOutlet weak var textField: UITextField! {
         didSet {
             textField.delegate = self
+            textField.isEnabled = false
         }
     }
     
-
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -43,15 +46,11 @@ class MyTableViewCell: UITableViewCell, UITextFieldDelegate {
         // Initialization code
         
         
-    }
-    
-    
-    @objc func doubleTapFunc() {
-        textField.clearsOnBeginEditing = true
-        textField.isEnabled = true
-
         
     }
+    
+    
+     
     
     
     override func setSelected(_ selected: Bool, animated: Bool) {

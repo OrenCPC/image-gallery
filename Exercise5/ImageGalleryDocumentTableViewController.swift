@@ -7,42 +7,58 @@
 
 import UIKit
 
-class ImageGalleryDocumentTableViewController: UITableViewController {
+class ImageGalleryDocumentTableViewController: UITableViewController, UIGestureRecognizerDelegate {
     
-    private lazy var tableModel = GalleryNamesTableModel()
+     lazy var tableModel = GalleryNamesTableModel()
     
-    override func shouldPerformSegue(withIdentifier identifier: String,
-                                          sender: Any?) -> Bool {
-        switch identifier {
-        case "TableToGallery" :
-            if let cell = sender as? UITableViewCell,
-               
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+   override func shouldPerformSegue(withIdentifier identifier: String,
+                                         sender: Any?) -> Bool {
+       switch identifier {
+       case "TableToGallery" :
+           if let cell = sender as? UITableViewCell,
+              
                let indexPath = tableView.indexPath(for: cell) {
-                if indexPath.section == 0 {
-                    return true
-                }
-            }
-        default: break
-        }
-        return false
-    }
+               if indexPath.section == 0 {
+                   return true
+               }
+           }
+       default: break
+       }
+       return false
+   }
+   
+   
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if let identifier = segue.identifier {
+           if shouldPerformSegue(withIdentifier: identifier, sender: sender as? UITableViewCell) {
+               switch identifier {
+               case "TableToGallery" :
+                   if let cell = sender as? UITableViewCell,
+                      let indexPath = tableView.indexPath(for: cell),
+                      let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
+                       seguedToMVC.galleryWithoutImages = tableModel.imageGalleries[indexPath.row]
+                   }
+               default: break
+               }
+           }
+       }
+   }
+    
+    @objc func singleTapFunc(inputCell: MyTableViewCell) {
+//        let cell = self
+       performSegue(withIdentifier: "TableToGallery", sender: self)
+   }
+   
+   @objc func doubleTapFunc(inputCell: MyTableViewCell) {
+       inputCell.textField.isEnabled = true
+       inputCell.textField.clearsOnBeginEditing = true
+   }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let identifier = segue.identifier {
-            if shouldPerformSegue(withIdentifier: identifier, sender: sender as? UITableViewCell) {
-                switch identifier {
-                case "TableToGallery" :
-                    if let cell = sender as? UITableViewCell,
-                       let indexPath = tableView.indexPath(for: cell),
-                       let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
-                        seguedToMVC.galleryWithoutImages = tableModel.imageGalleries[indexPath.row]
-                    }
-                default: break
-                }
-            }
-        }
-    }
     
     // MARK: - Table view data source
 
@@ -81,6 +97,15 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
             switch indexPath.section {
             case 0: inputCell.textField.text = tableModel.imageGalleries[indexPath.row].galleryName
             case 1: inputCell.textField.text = tableModel.deletedImageGalleries[indexPath.row].galleryName
+                
+                let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapFunc))
+                        doubleTap.numberOfTapsRequired = 2
+                self.tableView.addGestureRecognizer(doubleTap)
+                
+                let singleTap = UITapGestureRecognizer(target: self, action: #selector(singleTapFunc))
+                        singleTap.numberOfTapsRequired = 1
+                self.tableView.addGestureRecognizer(singleTap)
+                
             default: break
                 
             }
