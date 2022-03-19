@@ -34,37 +34,10 @@ struct GalleryNamesTableModel {
                         "https://clicklovegrow.com/wp-content/uploads/2020/01/Leeza-Wishart-Graduaste.jpg"
                                 ]
     
-    mutating func createNewGallery() {
-        var urls : [String] = []
-        var copyOfRandomUrls = randomUrls
-        for _ in 0...1 {
-            let randomUrlIndex = Int(arc4random_uniform(UInt32(randomUrls.count - 1)))
-            urls += [copyOfRandomUrls.remove(at: randomUrlIndex)]
-        }
-        let newImageGallery = ImageGallery(imagesURL: urls.compactMap{ URL(string: $0) },
-                                           galleryName: "Untitled".madeUnique(withRespectTo:
-                                                                                (imageGalleries.map{ $0.galleryName})+(deletedImageGalleries.map{ $0.galleryName })))
-        
-        
-        imageGalleries += [newImageGallery]
-    }
     
-    mutating func deleteFromImageGallery(at indexPath: IndexPath)-> ImageGallery{
-       return imageGalleries.remove(at: indexPath.row)
-    }
-    
-    mutating func deleteFromDeletedImageGallery(at indexPath: IndexPath)-> ImageGallery{
-       return deletedImageGalleries.remove(at: indexPath.row)
-    }
-    
-    
-    mutating func addToDeletedGallery(gallery: ImageGallery) {
-        deletedImageGalleries += [gallery]
-    }
-    
-    mutating func addToImageGallery(gallery: ImageGallery) {
-        imageGalleries += [gallery]
-    }
+//    mutating func addRow(at indexPath: IndexPath, with text: String) {
+//        self.data[indexPath.section].sectionGalleries?[indexPath.row] = text
+//    }
 //    
 //    func getRow(at indexPath: IndexPath) -> String? {
 //        return self.data[indexPath.section].sectionGalleries?[indexPath.row]
