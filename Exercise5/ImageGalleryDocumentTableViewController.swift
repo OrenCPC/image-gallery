@@ -11,25 +11,11 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     
     private lazy var tableModel = GalleryNamesTableModel()
     
-    override func shouldPerformSegue(withIdentifier identifier: String,
-                                          sender: Any?) -> Bool {
-        switch identifier {
-        case "TableToGallery" :
-            if let cell = sender as? UITableViewCell,
-               let indexPath = tableView.indexPath(for: cell) {
-                if indexPath.section == 0 {
-                    return true
-                }
-            }
-        default: break
-        }
-        return false
-    }
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
-            if shouldPerformSegue(withIdentifier: identifier, sender: sender as? UITableViewCell) {
                 switch identifier {
                 case "TableToGallery" :
                     if let cell = sender as? UITableViewCell,
@@ -39,7 +25,6 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                     }
                 default: break
                 }
-            }
         }
     }
     
@@ -94,8 +79,9 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
             }
             
             inputCell.segueHandler = { [weak self, unowned inputCell] in
-//                self.navigationController?.pushViewController(nextViewController, animated: true)
+                if indexPath.section == 0 {
                 self?.performSegue(withIdentifier: "TableToGallery", sender: inputCell)
+                }
             }
         }
         

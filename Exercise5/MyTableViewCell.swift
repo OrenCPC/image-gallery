@@ -51,27 +51,12 @@ class MyTableViewCell: UITableViewCell, UITextFieldDelegate {
 
         textField.isEnabled = false
         segueHandler?()
-
-//        performSegue(withIdentifier: "TableToGallery", sender: ))
-//        textField.clearsOnBeginEditing = true
-//        textField.isEnabled = true
     }
-//    
-//    
+    
     @objc func doubleTapFunc() {
         print("double")
         textField.isEnabled = true
         textField.becomeFirstResponder()
-//        textField.clearsOnBeginEditing = true
-//        textField.isEnabled = true
+
     }
-//    
-//    
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        
-//        super.setSelected(selected, animated: animated)
-//        
-//        // Configure the view for the selected state
-//    }
-    
 }
