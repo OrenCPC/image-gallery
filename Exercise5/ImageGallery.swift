@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct ImageGallery {
-//: Codable
+struct ImageGallery: Codable {
+
     
     var images : [Photo]
     var imagesURL : [URL?]

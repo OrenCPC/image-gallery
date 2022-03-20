@@ -19,7 +19,8 @@ class ImageCollectionViewModel {
                 if let image = UIImage(data: imageData) {
                     let imageWidth = image.size.width
                     let imageHeight = image.size.height
-                    self.images += [Photo(image: image, ratio: imageWidth/imageHeight)]
+                    let convertedImage = Image(withImage: image)
+                    self.images += [Photo(image: convertedImage, ratio: imageWidth/imageHeight)]
                 }
             }
         }

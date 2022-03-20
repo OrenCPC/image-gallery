@@ -14,7 +14,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     
     private var width: CGFloat = 400
 
-//    let defaults = UserDefaults.standard
     var gallery: ImageGallery?
 
 
@@ -25,7 +24,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController
             self.width *= recognizer.scale
             recognizer.scale = 1.0
             print("width \(width)")
-//            flowLayout?.invalidateLayout()
             self.collectionView.reloadData()
         default: break
         }
@@ -85,7 +83,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
     }
 
     func image(at indexPath: IndexPath) -> UIImage {
-        return gallery!.images[indexPath.item].image
+        return gallery!.images[indexPath.item].image.getImage()!
 //        return downloadedImages[indexPath.item].image
     }
 
@@ -101,7 +99,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController
            let destinationVC = segue.destination as? ImageViewController,
             let firstSelectedItem = collectionView.indexPathsForSelectedItems?.first,
            segueIdentifier == "cellToImage" {
-            destinationVC.image = self.imageGalleryModel.images[firstSelectedItem.row].image
+            destinationVC.image = self.imageGalleryModel.images[firstSelectedItem.row].image.getImage()!
             print(self.imageGalleryModel.images[firstSelectedItem.row].ratio)
         }
     }

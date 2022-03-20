@@ -47,6 +47,19 @@ struct GalleryNamesTableModel {
         
         
         imageGalleries += [newImageGallery]
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(imageGalleries)
+
+            // Write/Set Data
+            UserDefaults.standard.set(data, forKey: "image galleries")
+
+        } catch {
+            print("Unable to Encode Array of Image Galleries (\(error))")
+        }
     }
     
     mutating func deleteFromImageGallery(at indexPath: IndexPath)-> ImageGallery{
@@ -66,6 +79,19 @@ struct GalleryNamesTableModel {
     
     mutating func addToImageGallery(gallery: ImageGallery) {
         imageGalleries += [gallery]
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(imageGalleries)
+
+            // Write/Set Data
+            UserDefaults.standard.set(data, forKey: "image galleries")
+
+        } catch {
+            print("Unable to Encode Array of Image Galleries (\(error))")
+        }
 
     }
 //    
@@ -75,38 +101,38 @@ struct GalleryNamesTableModel {
     let defaults = UserDefaults.standard
 
     init() {
-//        if let data = UserDefaults.standard.data(forKey: "image galleries") {
-//            do {
-//                // Create JSON Decoder
-//                let decoder = JSONDecoder()
-//
-//                // Decode Note
-//                imageGalleries = try decoder.decode([ImageGallery].self, from: data)
-//
-//            } catch {
-//                print("Unable to Decode Notes (\(error))")
-//            }
-//        } else {
+        if let data = UserDefaults.standard.data(forKey: "image galleries") {
+            do {
+                // Create JSON Decoder
+                let decoder = JSONDecoder()
+
+                // Decode Note
+                imageGalleries = try decoder.decode([ImageGallery].self, from: data)
+
+            } catch {
+                print("Unable to Decode Array of Image galleries (\(error))")
+            }
+        } else {
             for (name, stringUrls) in dict {
                 let urls = stringUrls.compactMap{ URL(string: $0) }
                 let newImageGallery = ImageGallery(imagesURL: urls, galleryName: name)
                 self.imageGalleries += [newImageGallery]
                 
-//                do {
-//                    // Create JSON Encoder
-//                    let encoder = JSONEncoder()
-//
-//                    // Encode Note
-//                    let data = try encoder.encode(imageGalleries)
-//
-//                    // Write/Set Data
-//                    UserDefaults.standard.set(data, forKey: "image galleries")
-//
-//                } catch {
-//                    print("Unable to Encode Array of Image Galleries (\(error))")
-//                }
-//               
-//            }
+                do {
+                    // Create JSON Encoder
+                    let encoder = JSONEncoder()
+
+                    // Encode Note
+                    let data = try encoder.encode(imageGalleries)
+
+                    // Write/Set Data
+                    UserDefaults.standard.set(data, forKey: "image galleries")
+
+                } catch {
+                    print("Unable to Encode Array of Image Galleries (\(error))")
+                }
+               
+            }
         }
         
         
