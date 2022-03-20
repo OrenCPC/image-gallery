@@ -13,7 +13,6 @@ class ImageCollectionViewModel {
         
     private func fetchImage(imageUrl: URL?) {
         if let url = imageUrl?.imageURL {
-            //            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let urlContents = try? Data(contentsOf: url)
             if let imageData = urlContents {
                 if let image = UIImage(data: imageData) {

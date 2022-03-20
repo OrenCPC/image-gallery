@@ -9,7 +9,6 @@ import Foundation
 
 struct ImageGallery: Codable {
 
-    
     var images : [Photo]
     var imagesURL : [URL?]
     var galleryName : String
@@ -29,15 +28,5 @@ struct ImageGallery: Codable {
         self.galleryName = galleryName
         self.images = []
         self.isDeleted = false
-    }
-    
-    
-    
-    init(){
-        self.imagesURL = []
-        self.galleryName = ""
-        self.images = []
-        self.isDeleted = false
-        identifier = -1
     }
 }

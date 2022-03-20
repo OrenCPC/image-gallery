@@ -73,12 +73,10 @@ struct GalleryNamesTableModel {
     mutating func addToImageGallery(gallery: ImageGallery) {
         imageGalleries += [gallery]
         saveGalleriesInDefaults()
+        
 
     }
-//    
-//    func getRow(at indexPath: IndexPath) -> String? {
-//        return self.data[indexPath.section].sectionGalleries?[indexPath.row]
-//    }
+
     
     func saveGalleriesInDefaults() {
         do {
@@ -89,7 +87,8 @@ struct GalleryNamesTableModel {
             let data = try encoder.encode(imageGalleries)
 
             // Write/Set Data
-            UserDefaults.standard.set(data, forKey: "image galleries")
+            UserDefaults.standard.setValue(data, forKey: "image galleries")
+            
 
         } catch {
             print("Unable to Encode Array of Image Galleries (\(error))")
@@ -105,7 +104,8 @@ struct GalleryNamesTableModel {
             let data = try encoder.encode(deletedImageGalleries)
 
             // Write/Set Data
-            UserDefaults.standard.set(data, forKey: "deleted image galleries")
+            UserDefaults.standard.setValue(data, forKey: "deleted image galleries")
+            
 
         } catch {
             print("Unable to Encode deleted Array of Image Galleries (\(error))")
@@ -115,7 +115,7 @@ struct GalleryNamesTableModel {
     init() {
         if let data = UserDefaults.standard.data(forKey: "image galleries") {
             do {
-                // Create JSON Decoder
+                
                 let decoder = JSONDecoder()
 
                 // Decode Note
@@ -129,8 +129,8 @@ struct GalleryNamesTableModel {
                 let urls = stringUrls.compactMap{ URL(string: $0) }
                 let newImageGallery = ImageGallery(imagesURL: urls, galleryName: name)
                 self.imageGalleries += [newImageGallery]
-                saveGalleriesInDefaults()
             }
+            saveGalleriesInDefaults()
         }
         
         if let data = UserDefaults.standard.data(forKey: "deleted image galleries") {

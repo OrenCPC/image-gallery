@@ -41,14 +41,12 @@ class MyTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.addGestureRecognizer(singleTap)
         singleTap.require(toFail: doubleTap)
 
-        
         textField.isEnabled = false
 
     }
     
     @objc func singleTapFunc() {
         print("single")
-
         textField.isEnabled = false
         segueHandler?()
     }
@@ -57,6 +55,5 @@ class MyTableViewCell: UITableViewCell, UITextFieldDelegate {
         print("double")
         textField.isEnabled = true
         textField.becomeFirstResponder()
-
     }
 }
