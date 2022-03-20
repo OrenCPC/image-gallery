@@ -22,6 +22,7 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
                        let indexPath = tableView.indexPath(for: cell),
                        let seguedToMVC = segue.destination as? ImageGalleryCollectionViewController {
                         seguedToMVC.galleryWithoutImages = tableModel.imageGalleries[indexPath.row]
+                        seguedToMVC.title = tableModel.imageGalleries[indexPath.row].galleryName
                     }
                 default: break
                 }

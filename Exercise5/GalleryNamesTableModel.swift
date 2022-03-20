@@ -47,58 +47,70 @@ struct GalleryNamesTableModel {
         
         
         imageGalleries += [newImageGallery]
-        do {
-            // Create JSON Encoder
-            let encoder = JSONEncoder()
-
-            // Encode Note
-            let data = try encoder.encode(imageGalleries)
-
-            // Write/Set Data
-            UserDefaults.standard.set(data, forKey: "image galleries")
-
-        } catch {
-            print("Unable to Encode Array of Image Galleries (\(error))")
-        }
+        
+        saveGalleriesInDefaults()
     }
     
     mutating func deleteFromImageGallery(at indexPath: IndexPath)-> ImageGallery{
-       return imageGalleries.remove(at: indexPath.row)
-
+        let deletedGallery = imageGalleries.remove(at: indexPath.row)
+        saveGalleriesInDefaults()
+       return deletedGallery
     }
     
     mutating func deleteFromDeletedImageGallery(at indexPath: IndexPath)-> ImageGallery{
-       return deletedImageGalleries.remove(at: indexPath.row)
+        let deletedGallery = deletedImageGalleries.remove(at: indexPath.row)
+        saveDeletedGalleriesInDefaults()
+       return deletedGallery
     }
     
     
     mutating func addToDeletedGallery(gallery: ImageGallery) {
         deletedImageGalleries += [gallery]
+        saveDeletedGalleriesInDefaults()
 
     }
     
     mutating func addToImageGallery(gallery: ImageGallery) {
         imageGalleries += [gallery]
-        do {
-            // Create JSON Encoder
-            let encoder = JSONEncoder()
-
-            // Encode Note
-            let data = try encoder.encode(imageGalleries)
-
-            // Write/Set Data
-            UserDefaults.standard.set(data, forKey: "image galleries")
-
-        } catch {
-            print("Unable to Encode Array of Image Galleries (\(error))")
-        }
+        saveGalleriesInDefaults()
 
     }
 //    
 //    func getRow(at indexPath: IndexPath) -> String? {
 //        return self.data[indexPath.section].sectionGalleries?[indexPath.row]
 //    }
-    let defaults = UserDefaults.standard
+    
+    func saveGalleriesInDefaults() {
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(imageGalleries)
+
+            // Write/Set Data
+            UserDefaults.standard.set(data, forKey: "image galleries")
+
+        } catch {
+            print("Unable to Encode Array of Image Galleries (\(error))")
+        }
+    }
+    
+    func saveDeletedGalleriesInDefaults() {
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(deletedImageGalleries)
+
+            // Write/Set Data
+            UserDefaults.standard.set(data, forKey: "deleted image galleries")
+
+        } catch {
+            print("Unable to Encode deleted Array of Image Galleries (\(error))")
+        }
+    }
 
     init() {
         if let data = UserDefaults.standard.data(forKey: "image galleries") {
@@ -117,28 +129,21 @@ struct GalleryNamesTableModel {
                 let urls = stringUrls.compactMap{ URL(string: $0) }
                 let newImageGallery = ImageGallery(imagesURL: urls, galleryName: name)
                 self.imageGalleries += [newImageGallery]
-                
-                do {
-                    // Create JSON Encoder
-                    let encoder = JSONEncoder()
-
-                    // Encode Note
-                    let data = try encoder.encode(imageGalleries)
-
-                    // Write/Set Data
-                    UserDefaults.standard.set(data, forKey: "image galleries")
-
-                } catch {
-                    print("Unable to Encode Array of Image Galleries (\(error))")
-                }
-               
+                saveGalleriesInDefaults()
             }
         }
         
-        
-        
-        
-        
-//        defaults.set(imageGalleries, forKey: "Saved Image Galleries")
+        if let data = UserDefaults.standard.data(forKey: "deleted image galleries") {
+            do {
+                // Create JSON Decoder
+                let decoder = JSONDecoder()
+
+                // Decode Note
+                deletedImageGalleries = try decoder.decode([ImageGallery].self, from: data)
+
+            } catch {
+                print("Unable to Decode Deleted Array of Image galleries (\(error))")
+            }
+        }
     }
 }
