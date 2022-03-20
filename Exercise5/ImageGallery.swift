@@ -6,7 +6,9 @@
 //
 
 import Foundation
+
 struct ImageGallery {
+//: Codable
     
     var images : [Photo]
     var imagesURL : [URL?]
@@ -28,6 +30,9 @@ struct ImageGallery {
         self.images = []
         self.isDeleted = false
     }
+    
+    
+    
     init(){
         self.imagesURL = []
         self.galleryName = ""

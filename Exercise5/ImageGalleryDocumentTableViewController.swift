@@ -16,7 +16,6 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
         switch identifier {
         case "TableToGallery" :
             if let cell = sender as? UITableViewCell,
-               
                let indexPath = tableView.indexPath(for: cell) {
                 if indexPath.section == 0 {
                     return true
@@ -82,9 +81,24 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
             case 0: inputCell.textField.text = tableModel.imageGalleries[indexPath.row].galleryName
             case 1: inputCell.textField.text = tableModel.deletedImageGalleries[indexPath.row].galleryName
             default: break
-                
+            }
+            inputCell.resignationHandler = { [weak self, unowned inputCell] in
+                if let text = inputCell.textField.text {
+                    switch indexPath.section {
+                    case 0: self?.tableModel.imageGalleries[indexPath.row].galleryName = text
+                    case 1: self?.tableModel.deletedImageGalleries[indexPath.row].galleryName = text
+                    default: break
+                    }
+                }
+                self?.tableView.reloadData()
+            }
+            
+            inputCell.segueHandler = { [weak self, unowned inputCell] in
+//                self.navigationController?.pushViewController(nextViewController, animated: true)
+                self?.performSegue(withIdentifier: "TableToGallery", sender: inputCell)
             }
         }
+        
         return cell
     }
     
@@ -96,7 +110,6 @@ class ImageGalleryDocumentTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
            return 40
     }
-    
 
     
     /*
@@ -212,3 +225,11 @@ extension Collection {
         return try self.filter(test).count
     }
 }
+
+
+//extension ImageGalleryDocumentTableViewController: UITextFieldDelegate {
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        performSegue(withIdentifier: "TableToGallery", sender: textField)
+//        return true
+//    }
+//}

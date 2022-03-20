@@ -51,6 +51,7 @@ struct GalleryNamesTableModel {
     
     mutating func deleteFromImageGallery(at indexPath: IndexPath)-> ImageGallery{
        return imageGalleries.remove(at: indexPath.row)
+
     }
     
     mutating func deleteFromDeletedImageGallery(at indexPath: IndexPath)-> ImageGallery{
@@ -60,20 +61,58 @@ struct GalleryNamesTableModel {
     
     mutating func addToDeletedGallery(gallery: ImageGallery) {
         deletedImageGalleries += [gallery]
+
     }
     
     mutating func addToImageGallery(gallery: ImageGallery) {
         imageGalleries += [gallery]
+
     }
 //    
 //    func getRow(at indexPath: IndexPath) -> String? {
 //        return self.data[indexPath.section].sectionGalleries?[indexPath.row]
 //    }
+    let defaults = UserDefaults.standard
 
     init() {
-        for (name, stringUrls) in dict {
-            let urls = stringUrls.compactMap{ URL(string: $0) }
-            self.imageGalleries += [ImageGallery(imagesURL: urls, galleryName: name)]
+//        if let data = UserDefaults.standard.data(forKey: "image galleries") {
+//            do {
+//                // Create JSON Decoder
+//                let decoder = JSONDecoder()
+//
+//                // Decode Note
+//                imageGalleries = try decoder.decode([ImageGallery].self, from: data)
+//
+//            } catch {
+//                print("Unable to Decode Notes (\(error))")
+//            }
+//        } else {
+            for (name, stringUrls) in dict {
+                let urls = stringUrls.compactMap{ URL(string: $0) }
+                let newImageGallery = ImageGallery(imagesURL: urls, galleryName: name)
+                self.imageGalleries += [newImageGallery]
+                
+//                do {
+//                    // Create JSON Encoder
+//                    let encoder = JSONEncoder()
+//
+//                    // Encode Note
+//                    let data = try encoder.encode(imageGalleries)
+//
+//                    // Write/Set Data
+//                    UserDefaults.standard.set(data, forKey: "image galleries")
+//
+//                } catch {
+//                    print("Unable to Encode Array of Image Galleries (\(error))")
+//                }
+//               
+//            }
         }
+        
+        
+        
+        
+        
+//        defaults.set(imageGalleries, forKey: "Saved Image Galleries")
     }
 }

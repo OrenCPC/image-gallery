@@ -122,7 +122,6 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="textField" destination="36O-Mp-lG8" id="RW5-GB-oGP"/>
-                                    <segue destination="qBK-V4-Lbm" kind="show" identifier="TableToGallery" id="Fuc-cZ-TiT"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -140,6 +139,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="qBK-V4-Lbm" kind="show" identifier="TableToGallery" id="KTj-2l-KWr"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x6T-gw-Bpf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
